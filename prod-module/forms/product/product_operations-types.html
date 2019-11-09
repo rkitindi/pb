@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="REGISTER PRODUCT DETAILS" id="rprodcat"><br>
+					<input type="button" value="UPDATE PRODUCT DETAILS" id="uprodcat"><br>				
+					<input type="button" value="DELETE PRODUCT DETAILS" id="dprodcat"><br>									
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#rprodcat").click(function(){
+                $("#mod_display").load("forms/product/register_product.php"); 
+            });
+			$("#uprodcat").click(function(){
+                $("#mod_display").load("forms/product/search_product.php"); 
+            });
+			$("#dprodcat").click(function(){
+                $("#mod_display").load("forms/product/del_search_product.php"); 
+            });
+			$("#rprod").click(function(){
+                $("#mod_display").load("forms/product/register_product.php"); 
+            });
+			$("#uprod").click(function(){
+                $("#mod_display").load("forms/product/search_product.php"); 
+            });
+			$("#dprod").click(function(){
+                $("#mod_display").load("forms/product/del_search_product.php"); 
+            });
+			$("#dispro").click(function(){
+                $("#mod_display").load("forms/product/dispatch_product.php"); 
+            });
+			$("#udisp").click(function(){
+                $("#mod_display").load("forms/product/search_dispatched.php"); 
+            });
+			$("#ddisp").click(function(){
+                $("#mod_display").load("forms/product/del_search_dispatched.php"); 
+            });
+		</script>
+</body>
+</html>

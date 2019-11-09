@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">WHAT DO YOU WANT TO DO?</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="WATER-BILL PAYMENTS" id="water"><br>
+					<input type="button" value="ELECTRICITY-BILL PAYMENTS" id="power"><br>				
+					<input type="button" value="PHONE-BILL PAYMENTS" id="phone"><br>	
+					<input type="button" value="SUPPLIER PAYMENTS" id="supplier"><br>	
+					<input type="button" value="EMPLOYEE PAYMENTS" id="emplyee"><br>
+					<input type="button" value="CASUALWORKERS PAYMENTS" id="casual"><br>
+				    <input type="button" value="TAX PAYMENTS" id="tax">
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#water").click(function(){
+                $("#mod_display").load("forms/payments/search_water_appr.php"); 
+            });
+			$("#power").click(function(){
+                $("#mod_display").load("forms/payments/search_electicity_appr.php"); 
+            });
+			$("#phone").click(function(){
+                $("#mod_display").load("forms/payments/search_phone_appr.php"); 
+            });
+			$("#supplier").click(function(){
+                $("#mod_display").load("forms/payments/search_message.php"); 
+            });
+			$("#emplyee").click(function(){
+                $("#mod_display").load("forms/payments/search_employee_appr.php"); 
+            });
+			$("#casual").click(function(){
+                $("#mod_display").load("forms/payments/search_casual_appr.php"); 
+            });
+			$("#tax").click(function(){
+                $("#mod_display").load("forms/payments/search_tax_appr.php"); 
+            });
+		</script>
+</body>
+</html>

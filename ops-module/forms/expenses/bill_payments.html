@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="PHONE BILL" id="pbill"><br>
+					<input type="button" value="WATER BILL" id="wbill"><br>
+					<input type="button" value="ELECTRICITY BILL" id="ebill"><br>					
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#pbill").click(function(){
+                $("#mod_display").load("forms/expenses/phone_bill_ops.html"); 
+            });
+			$("#wbill").click(function(){
+                $("#mod_display").load("forms/expenses/water_bill_ops.html"); 
+            });
+			$("#ebill").click(function(){
+                $("#mod_display").load("forms/expenses/elect_bill_ops.html"); 
+            });
+		</script>
+</body>
+</html>

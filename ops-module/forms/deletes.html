@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PRINCESS BANANA ERP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+    </head>
+    <body>
+       <div id="update_container">
+             <div id="update_tittle">Please Select UPDATE task:</div>
+             <div id="menu_list"> 
+				<div class="list-type1">
+					<ol>
+						<li><a id="track" href="#">Delete Truck</a></li>
+						<li><a id="expen" href="#">Delete Expenses</a></li>
+					    <li><a id="expt" href="#">Delete Expense Types</a></li>
+						<li><a id="pos" href="#">Delete POS </a></li>
+						<li><a id="procat" href="#">Delete Product Categories</a></li>
+						<li><a id="batch" href="#">Delete Batches</a></li>
+						<li><a id="prod" href="#">Delete Products</a></li>
+						<li><a id="disp" href="#">Delete Dispatch</a></li>
+						<li><a id="supp" href="#">Delete Supplier</a></li>
+						<li><a id="cust" href="#">Delete Customer</a></li>
+						<li><a id="bust" href="#">Delete Business Types</a></li>
+					</ol>
+				</div> 
+			 </div>
+        </div>
+	<script type="text/javascript"> 
+            $("#track").click(function(){
+                $("#mod_display").load("forms/del_search_truck.php"); 
+            });
+			$("#expen").click(function(){
+                $("#mod_display").load("forms/del_search_expense.php"); 
+            });
+			$("#expt").click(function(){
+                $("#mod_display").load("forms/del_search_exptype.php"); 
+            });
+			$("#pos").click(function(){
+                $("#mod_display").load("forms/del_search_pos.php"); 
+            });
+			$("#procat").click(function(){
+                $("#mod_display").load("forms/del_search_prod_cat.php"); 
+            });
+			$("#batch").click(function(){
+                $("#mod_display").load("forms/del_search_batch.php"); 
+            });
+			$("#prod").click(function(){
+                $("#mod_display").load("forms/del_search_product.php"); 
+            });
+			$("#disp").click(function(){
+                $("#mod_display").load("forms/del_search_dispatch.php"); 
+            });
+			$("#supp").click(function(){
+                $("#mod_display").load("forms/del_search_supplier.php"); 
+            });
+			$("#cust").click(function(){
+                $("#mod_display").load("forms/del_search_customer.php"); 
+            });
+			$("#bust").click(function(){
+                $("#mod_display").load("forms/del_search_business_type.php"); 
+            });
+     </script>
+	</body>
+</html>
+

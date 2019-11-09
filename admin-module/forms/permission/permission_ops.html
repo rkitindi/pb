@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create permission</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_permission.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="ADD PERMISSION" id="rpermission"><br>
+					<input type="button" value="UPDATE PERMISSION" id="upermission"><br>				
+					<input type="button" value="DELETE PERMISSION" id="dpermission"><br>
+		
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#rpermission").click(function(){
+                $("#mod_display").load("forms/permission/add_permission.php"); 
+            });
+			$("#upermission").click(function(){
+                $("#mod_display").load("forms/permission/search_permission.php"); 
+            });
+			$("#dpermission").click(function(){
+                $("#mod_display").load("forms/permission/del_search_permission.php"); 
+            });
+		</script>
+</body>
+</html>

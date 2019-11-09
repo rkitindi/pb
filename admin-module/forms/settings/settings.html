@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create settings</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_settings.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="CHANGE LOGO" id="clogo"><br>
+					<input type="button" value="CHANGE PAGE BACKGROUND CLOLOR" id="bcolor"><br>				
+					<input type="button" value="CHANGE PAGE COLOR" id="pcolor"><br>
+					<input type="button" value="CHANGE FONT COLOR" id="fcolor"><br>
+					<input type="button" value="CHANGE FONT SIZE" id="fsize"><br>
+					<input type="button" value="MESSAGE OF THE DAY" id="motd">
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#clogo").click(function(){
+                $("#mod_display").load("forms/settings/change_logo.php"); 
+            });
+			$("#bcolor").click(function(){
+                $("#mod_display").load("forms/settings/change_bcolor.php"); 
+            });
+			$("#pcolor").click(function(){
+                $("#mod_display").load("forms/settings/change_page_color.php"); 
+            });
+			$("#fcolor").click(function(){
+                $("#mod_display").load("forms/settings/change_font_color.php"); 
+            });
+			$("#fsize").click(function(){
+                $("#mod_display").load("forms/settings/change_font_size.php"); 
+            });
+			$("#motd").click(function(){
+                $("#mod_display").load("forms/settings/motd/motd_ops.html"); 
+            });
+		</script>
+</body>
+</html>

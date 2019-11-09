@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PRINCESS BANANA ERP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+    </head>
+    <body>
+       <div id="update_container">
+             <div id="update_tittle">Please Select UPDATE task:</div>
+             <div id="menu_list"> 
+				<div class="list-type1">
+					<ol>
+						<li><a id="track" href="#">Update Truck</a></li>
+						<li><a id="expen" href="#">Update Expenses</a></li>
+					    <li><a id="expt" href="#">Expense Types</a></li>
+						<li><a id="pos" href="#">Update POS </a></li>
+						<li><a id="pcat" href="#">Product Categories</a></li>
+						<li><a id="batch" href="#">Update Batches</a></li>
+						<li><a id="prod" href="#">Update Products</a></li>
+						<li><a id="disp" href="#">Update Dispatch</a></li>
+						<li><a id="supp" href="#">Update Supplier</a></li>
+						<li><a id="cust" href="#">Update Customer</a></li>
+						<li><a id="bust" href="#">Business Types</a></li>
+					</ol>
+				</div> 
+			 </div>
+        </div>
+	<script type="text/javascript"> 
+            $("#track").click(function(){
+                $("#mod_display").load("forms/search_truck.php"); 
+            });
+			$("#expen").click(function(){
+                $("#mod_display").load("forms/search_expense.php"); 
+            });
+			$("#expt").click(function(){
+                $("#mod_display").load("forms/search_exptype.php"); 
+            });
+			$("#pos").click(function(){
+                $("#mod_display").load("forms/search_pos.php"); 
+            });
+			$("#pcat").click(function(){
+                $("#mod_display").load("forms/search_prod_cat.php"); 
+            });
+			$("#batch").click(function(){
+                $("#mod_display").load("forms/search_batch.php"); 
+            });
+			$("#prod").click(function(){
+                $("#mod_display").load("forms/search_product.php"); 
+            });
+			$("#disp").click(function(){
+                $("#mod_display").load("forms/search_dispatch.php"); 
+            });
+			$("#supp").click(function(){
+                $("#mod_display").load("forms/search_supplier.php"); 
+            });
+			$("#cust").click(function(){
+                $("#mod_display").load("forms/search_customer.php"); 
+            });
+			$("#bust").click(function(){
+                $("#mod_display").load("forms/search_business_type.php"); 
+            });
+     </script>
+	</body>
+</html>
+

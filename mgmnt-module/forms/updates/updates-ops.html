@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">WHAT DO YOU WANT TO DO?</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="ADMIN-MODULE UPDATES" id="admin"><br>
+					<input type="button" value="PRODUCTION-MODULE UPDATES" id="prod"><br>				
+					<input type="button" value="OPERATIONS-MODULE UPDATES" id="ops"><br>	
+					<input type="button" value="SALES-MODULE UPDATES" id="sales"><br>	
+					<input type="button" value="FINANCE-MODULE UPDATES" id="fin">
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#admin").click(function(){
+                $("#mod_display").load("forms/updates/add_message.php"); 
+            });
+			$("#prod").click(function(){
+                $("#mod_display").load("forms/updates/search_message.php"); 
+            });
+			$("#ops").click(function(){
+                $("#mod_display").load("forms/updates/del_search_message.php"); 
+            });
+			$("#sales").click(function(){
+                $("#mod_display").load("forms/updates/search_message.php"); 
+            });
+			$("#fin").click(function(){
+                $("#mod_display").load("forms/updates/del_search_message.php"); 
+            });
+		</script>
+</body>
+</html>

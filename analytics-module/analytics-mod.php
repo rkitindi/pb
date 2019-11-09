@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PRINCESS BANANA ERP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+    </head>
+    <body>
+      <!-- CONTAINER -->
+      <div class="container" id="container">
+        <!-- HEADER -->
+        <div id="header">
+           <div id="logo">PRINCESS BANANA</div>
+           <div id="top_info">ENTERPRISE RESOURCE PLANNING SYSTEM</div>
+           <div id="navbar">
+             <ul>
+                 <li><a href="../frontend/index.html">HOME</a></li>
+                 <li><a href="../hr-module/hr-mod.php">HR</a></li>
+				 <li><a href="../prod-module/prod-mod.php">PRODUCTION</a></li>
+                 <li><a href="../ops-module/operations-mod.php">ACCOUNTING</a></li>
+                 <li><a href="../sales-module/sales-mod.php">SALES</a></li>
+				 <li><a href="../finance-module/finance-mod.php">FINANCE</a></li>
+				 <li><a href="../mgmnt-module/mgmnt-mod.php">MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
+                 <li><a href="#">TRENDS</a></li>
+				 <li><a href="../admin-module/admin-mod.php">ADMIN</a></li>
+             </ul>
+           </div>
+        </div>
+        <!-- CONTENT AREA  -->
+        <div id="content_area">
+             <div id="mod_title">PRINCESS BANANA ERP - ANALYTICS MODULE</div>
+             <div id="mod_menu"> 
+			 ANALYTICS MENU
+			 <div class="list-type1">
+					<ol>
+						<li><a id="top_batch" href="#"> Top Batch </a></li>
+						<li><a id="top_product" href="#"> Top Product </a></li>
+						<li><a id="top_seller" href="#"> Top Sellere </a></li>
+						<li><a id="sales_trend" href="#"> Sales Trends </a></li>
+						<li><a id="prod_trend" href="#"> Products Trends </a></li>
+						<li><a id="batch_trend" href="#"> Batch Trends </a></li>
+						<li><a id="seller_trend" href="#"> Sellers Trends </a></li>
+						<li><a id="exp_trend" href="#"> Expenses Trends </a></li>
+					</ol>
+				</div> 
+			 </div>
+			 <div id="mod_display"> OPERATIONS CONTENT GOES HERE</div>
+			 <div id="sitemessages"><marquee behavior="scroll" direction="left">Checkout slide-in text here</marquee></div>
+        </div>
+        <!-- FOOTER -->
+        <div id="footer">
+           <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
+           <div id="section_2">Report Problem</div>
+           <div id="section_3">Logout</div>
+        </div>
+	</div>
+	<script type="text/javascript"> 
+            $("#top_batch").click(function(){
+                $("#mod_display").load("forms/top_batch.php"); 
+            });
+			$("#top_product").click(function(){
+                $("#mod_display").load("forms/top_product.php"); 
+            });
+			$("#top_seller").click(function(){
+                $("#mod_display").load("forms/top_seller.php"); 
+            });
+			$("#sales_trend").click(function(){
+                $("#mod_display").load("forms/sales_trends.php"); 
+            });
+			$("#prod_trend").click(function(){
+                $("#mod_display").load("forms/product_trends.php"); 
+            });
+			$("#batch_trend").click(function(){
+                $("#mod_display").load("forms/batch_trends.php"); 
+            });
+			$("#seller_trend").click(function(){
+                $("#mod_display").load("forms/sellers_trends.php"); 
+            });
+			$("#exp_trend").click(function(){
+                $("#mod_display").load("forms/expenses_trends.php"); 
+            });
+     </script>
+	</body>
+</html>
+
