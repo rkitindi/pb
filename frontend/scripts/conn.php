@@ -1,9 +1,9 @@
 <?php
 $servername = "localhost";
-$username = "demouser";
-$password = "demopassword";
+$username = "root";
+$password = "";
 
 //Creating connection for mysql
-$pdoConnect = new PDO("mysql:host=$servername;dbname=ps_database", $username, $password);
+$pdoConnect = new PDO("mysql:host=$servername;dbname=pb_db", $username, $password);
 
 ?>

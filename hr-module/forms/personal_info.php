@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
 	<div id="form_wrapper">
-			<div id="form_section1"> FILL THIS FORM BELOW TO CREATE EMPLOYEE PERSONAL INFORMATION</div>
+			<div id="form_section1">SUPPLY EMPLOYEE PERSONAL INFORMATION BELOW</div>
 			<form action="insert.php" method="post">
 				<div id="form_section2">				
 					<label for="eid">Employee ID</label><br>
@@ -114,11 +114,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<input type="text" id="lname" name="last_name" required placeholder="example (Carlos Gonzalez)"><br>
 					<label for="sdate">Start Date:</label><br>
 					<input type="date" id="sdate" name="start_date" required placeholder="Select"><br>
+					<label for="role">Department:</label><br>
+					<input type="text" id="role" name="start_date" required placeholder="Select a role from list -- HR, FIN, ADMIN, ACCOUNTING"><br>
 					<label for="role">Position Tittle:</label><br>
 					<input type="text" id="role" name="start_date" required placeholder="Select a role from list"><br>
 					<label for="gender">Gender:</label><br>
 					<input type="radio" id="M" name="gender" value="M"><label for="1">Male</label>
-            		<input type="radio" id="F" name="gender" value="F"><label for="0">Female</label><br><br>
+            		<input type="radio" id="F" name="gender" value="F"><label for="0">Female</label><br>
 					<label for="dob">Date of Birth:</label><br>
 					<input type="date" id="dob" name="date_of_birth" required placeholder="Select DOB"><br>
 					<label for="etype">Employement Type:</label><br>

@@ -12,7 +12,7 @@
 			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
 			<form action="update_permission.php" method="post">
 				<div id="form_section2">	
-					<input type="button" value="ADD PERMISSION" id="rpermission"><br>
+					<input type="button" value="ADD PERMISSION" id="apermission"><br>
 					<input type="button" value="UPDATE PERMISSION" id="upermission"><br>				
 					<input type="button" value="DELETE PERMISSION" id="dpermission"><br>
 		
@@ -21,8 +21,8 @@
 			</form>
 	</div>
 		<script type="text/javascript"> 
-            $("#rpermission").click(function(){
-                $("#mod_display").load("forms/permission/add_permission.php"); 
+            $("#apermission").click(function(){
+                $("#mod_display").load("forms/permission/insert_permissions.html"); 
             });
 			$("#upermission").click(function(){
                 $("#mod_display").load("forms/permission/search_permission.php"); 

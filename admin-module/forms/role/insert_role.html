@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD MOTD</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../../../frontend/style.css">
+</head>
+<body>
+
+	<div id="form_wrapper">
+			<div id="form_section1"> FILL THIS FORM BELOW TO SEARCH MESSAGE</div>
+			<form id="role-form">
+				<div id="form_section2">	
+				    <label for="rname">Role Name:</label><br>				
+					<select name="rname">
+						<option selected>Please Select Role from List</option>
+						<option value="admin">Admin</option>
+						<option value="mod-admin">Module Admin</option>
+						<option value="user">User</option>
+						<option value="viewer">Viewer</option>
+					</select>
+					<label for="rdesc">Role Description:</label><br>
+					<input type="text" id="rdesc" name="rdesc" required placeholder="Optional Add description"><br>
+					<label for="desc">Select Role Permissions:</label><br>
+						<input type="checkbox" name="default" value="default" checked>Default<br>
+						<input type="checkbox" name="insert" value="insert">Insert<br>
+						<input type="checkbox" name="update" value="update">Update<br>	
+						<input type="checkbox" name="delete" value="delete">Delete<br>	
+						<input type="checkbox" name="view" value="view">View<br>
+				</div>
+				<div id="form_bottons">
+					<div id="submit"><input id="search" type="submit" name="insert" value="SUBMIT"></div>
+					<div id="reset"><input type="reset" value="RESET" /> </form></div>
+				</div>
+			</form>
+	</div>
+	
+		<script> 
+            $("#search").click(function(){
+               	$.post("scripts/insert_role.php", $("#role-form").serialize(), function(response) {
+					$("#mod_display").html(response);
+				});
+			return false;
+            });
+		</script>
+		
+
+</body>
+</html>

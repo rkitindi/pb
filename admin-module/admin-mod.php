@@ -36,8 +36,8 @@
 			 ADMIN MENU
 				<div class="list-type1">
 					<ol>
-						<li><a id="role" href="#">User Roles</a></li>
 						<li><a id="perm" href="#">Permissions</a></li>
+						<li><a id="role" href="#">User Roles</a></li>
 						<li><a id="user" href="#">System Users</a></li>
 						<li><a id="set" href="#">System Settings</a></li>
 					</ol>

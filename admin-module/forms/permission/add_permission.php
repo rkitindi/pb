@@ -112,8 +112,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<input type="text" id="pname" name="permission_name" required placeholder="Type permission name"><br>
 					<label for="pname">Description:</label><br>
 					<input type="text" id="pname" name="permission_name" required placeholder="Type permission name"><br>
-					<label for="rid">Role ID:</label><br>
-					<input type="text" id="rid" name="role_id" required placeholder="Select from list"><br>	
 				</div>
 				<div id="form_bottons">
 					<div id="submit"><input type="submit" name="insert" value="SUBMIT"></div>

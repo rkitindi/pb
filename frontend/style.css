@@ -283,7 +283,7 @@ color:#FFF;
     
 }
 
-input[type='text'], select {
+input[type='text'] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -324,7 +324,7 @@ input[type='file'] {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  height: 55px;
+  height: 25px;
 }
 
 input[type='date'] {
@@ -337,6 +337,15 @@ input[type='date'] {
   box-sizing: border-box;
   height: 25px;
 }
+
+select {
+  border: 1px solid #ccc;
+  margin: 8px 0;
+  padding: 2px 20px;
+  width: 100%;
+  border-radius: 4px;
+  height: 25px;
+ }
 
 #form_bottons {
     padding: 0px;

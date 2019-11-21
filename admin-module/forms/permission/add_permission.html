@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet"  type="text/css" href="../../../frontend/style.css">  
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1"> FILL THIS FORM BELOW TO CREATE A PERMISSION</div>
+			<form id="perm-form">
+				<div id="form_section2">	
+					<label for="pname">Permission name:</label><br>
+					<select id="pname" name="pname" required placeholder="insert, update, delete, view">
+						<option value="insert">Insert</option>
+						<option value="update">Update</option>
+						<option value="delete">Delete</option>
+						<option value="view">View</option>
+					</select>					
+					<label for="pdesc">Permission Description:</label><br>
+					<input type="text" id="pdesc" name="permission_desc" required placeholder="Optional Add description"><br>
+				</div>
+				<div id="form_bottons">
+					<div id="submit"><input id="send-btn" type="submit" name="insert" value="SUBMIT"></div>
+					<div id="reset"><input type="reset" value="RESET" /></div>
+				</div>
+			</form>
+	</div>
+	
+	<script> 
+        $("#search").click(function(){
+            $.post("scripts/insert_permissions.php", $("#perm-form").serialize(), function(response) {
+				$("#mod_display").html(response);
+			});
+			return false;
+        });
+	</script>
+	
+</body>
+</html>

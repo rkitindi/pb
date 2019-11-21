@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`PersonalInfo_HR` (
  `FirstNames` VARCHAR(255) NOT NULL,
  `LastNames` VARCHAR(255) NOT NULL,
  `JoiningDate` DATETIME NOT NULL,
+ `Department` VARCHAR(255) NOT NULL,
  `PositionTittle` VARCHAR(255) NOT NULL,
  `Gender` VARCHAR(255) NOT NULL,
  `DateofBirth` DATETIME NOT NULL,
@@ -574,33 +575,34 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`RegisterDeffectiveProd_SAL` (
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Table `pb_db`.`UserRole_ADM`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `pb_db`.`UserRole_SAL` ;
-
-CREATE TABLE IF NOT EXISTS `pb_db`.`UserRole_SAL` (
- `RoleID` VARCHAR(255) NOT NULL,
- `RoleName` VARCHAR(255) NOT NULL,
- `RoleDescription` VARCHAR(255) NOT NULL,
- PRIMARY KEY (`RoleID`));
-
--- -----------------------------------------------------
 -- Table `pb_db`.`UserPermission_ADM`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pb_db`.`UserPermission_ADM` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`UserPermission_ADM` (
- `PermissionID` VARCHAR(255) NOT NULL,
+ `PermissionID` INT NOT NULL AUTO_INCREMENT,
  `PermissionName` VARCHAR(255) NOT NULL,
- `Description` VARCHAR(255) NOT NULL,
- `RoleID` VARCHAR(255) NOT NULL,
- PRIMARY KEY (`PermissionID`),
- INDEX `RoleID_idx` (`RoleID` ASC), 
- CONSTRAINT `RoleID_UP`
- FOREIGN KEY (`RoleID`)
- REFERENCES `pb_db`.`UserRole_SAL` (`RoleID`)
+ `Description` VARCHAR(255),
+ PRIMARY KEY (`PermissionID`));
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`UserRole_ADM`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`UserRole_ADM` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`UserRole_ADM` (
+ `RoleID` INT NOT NULL AUTO_INCREMENT,
+ `RoleName` VARCHAR(255) NOT NULL,
+ `RoleDescription` VARCHAR(255),
+ `PermissionID` INT NOT NULL,
+ PRIMARY KEY (`RoleID`),
+ INDEX `PermissionID_idx` (`PermissionID` ASC), 
+ CONSTRAINT `PermissionID_URS`
+ FOREIGN KEY (`PermissionID`)
+ REFERENCES `pb_db`.`UserPermission_ADM` (`PermissionID`)
  ON DELETE RESTRICT
  ON UPDATE RESTRICT);
+
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`UserDetails_ADM`
@@ -610,7 +612,7 @@ DROP TABLE IF EXISTS `pb_db`.`UserDetails_ADM` ;
 CREATE TABLE IF NOT EXISTS `pb_db`.`UserDetails_ADM` (
  `UserDetailID` INT NOT NULL AUTO_INCREMENT,
  `EmployeeID` VARCHAR(255) NOT NULL,
- `RoleID` VARCHAR(255) NOT NULL,
+ `RoleID` INT NOT NULL,
  `LoginName` VARCHAR(255) NOT NULL,
  `Password` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`UserDetailID`),
@@ -618,7 +620,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`UserDetails_ADM` (
  INDEX `RoleID_idx` (`RoleID` ASC), 
  CONSTRAINT `RoleID_UD`
  FOREIGN KEY (`RoleID`)
- REFERENCES `pb_db`.`UserRole_SAL` (`RoleID`)
+ REFERENCES `pb_db`.`UserRole_ADM` (`RoleID`)
  ON DELETE RESTRICT
  ON UPDATE RESTRICT,
  CONSTRAINT `EmployeeID_UD`
@@ -634,6 +636,7 @@ DROP TABLE IF EXISTS `pb_db`.`MOTD_ADM` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`MOTD_ADM` (
  `MessageID` INT NOT NULL AUTO_INCREMENT,
+ `MessageDate` DATE NOT NULL,
  `Message` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`MessageID`));
 
