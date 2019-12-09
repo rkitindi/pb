@@ -29,7 +29,7 @@ USE `pb_db` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pb_db`.`EmploymentType_HR` ;
 
-CREATE TABLE IF NOT EXISTS `pb_db`.`Employmentype_HR` (
+CREATE TABLE IF NOT EXISTS `pb_db`.`EmploymentType_HR` (
  `EmpTypeId` INT NOT NULL AUTO_INCREMENT,
  `EmploymentType` VARCHAR(255) NOT NULL,
  `Description` VARCHAR(255),
@@ -68,6 +68,17 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`LeaveType_HR` (
  `PaymentStatus` VARCHAR(255) NOT NULL,
  `Description` VARCHAR(255),
  PRIMARY KEY (`LeaveTypeId`));
+ 
+-- -----------------------------------------------------
+-- Table `pb_db`.`Department_HR`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`Department_HR` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`Department_HR` (
+ `DepartmentId` INT NOT NULL AUTO_INCREMENT,
+ `DepartmentName` VARCHAR(255) NOT NULL,
+ `Description` VARCHAR(255),
+ PRIMARY KEY (`DepartmentId`));
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`PersonalInfo_HR`
@@ -78,19 +89,25 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`PersonalInfo_HR` (
  `EmployeeId` VARCHAR(255) NOT NULL,
  `FirstNames` VARCHAR(255) NOT NULL,
  `LastNames` VARCHAR(255) NOT NULL,
- `JoiningDate` DATETIME NOT NULL,
- `Department` VARCHAR(255) NOT NULL,
+ `JoiningDate` DATE NOT NULL,
+ `DepartmentId`  INT NOT NULL,
  `PositionTittle` VARCHAR(255) NOT NULL,
  `Gender` VARCHAR(255) NOT NULL,
- `DateofBirth` DATETIME NOT NULL,
+ `DateofBirth` DATE NOT NULL,
  `EmpTypeId` INT NOT NULL,
  PRIMARY KEY (`EmployeeId`), 
  INDEX `EmpTypeId_idx` (`EmpTypeId` ASC), 
- CONSTRAINT `EmpTypeId`
+ INDEX `DepartmentId_idx` (`DepartmentId` ASC),
+ CONSTRAINT `EmpTypeId_PIH`
  FOREIGN KEY (`EmpTypeId`)
  REFERENCES `pb_db`.`EmploymentType_HR` (`EmpTypeId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `DepartmentId_PIH`
+ FOREIGN KEY (`DepartmentId`)
+ REFERENCES `pb_db`.`Department_HR` (`DepartmentId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`SalaryInfo_HR`
@@ -112,13 +129,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`SalaryInfo_HR` (
  CONSTRAINT `EmployeeId_SI`
  FOREIGN KEY (`EmployeeId`)
  REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `PayScheduleId`
  FOREIGN KEY (`PayScheduleId`)
  REFERENCES `pb_db`.`PaymentSchedule_HR` (`PayScheduleId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`LeaveInfo_HR`
@@ -138,13 +155,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`LeaveInfo_HR` (
  CONSTRAINT `EmployeeId_LI`
  FOREIGN KEY (`EmployeeId`)
  REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `LeaveTypeId`
  FOREIGN KEY (`LeaveTypeId`)
  REFERENCES `pb_db`.`LeaveType_HR` (`LeaveTypeId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`BankInfo_HR`
@@ -165,8 +182,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`BankInfo_HR` (
  CONSTRAINT `EmployeeId_BI`
  FOREIGN KEY (`EmployeeId`)
  REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 
@@ -180,10 +197,43 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`BankInfo_HR` (
 DROP TABLE IF EXISTS `pb_db`.`SupplierCategory_PROD` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`SupplierCategory_PROD` (
- `CategoryId` INT NOT NULL AUTO_INCREMENT,
+ `CategoryId` INT NOT NULL,
  `CategoryName` VARCHAR(255) NOT NULL,
  `Description` VARCHAR(255),
  PRIMARY KEY (`CategoryId`));
+ 
+-- -----------------------------------------------------
+-- Table `pb_db`.`ExpenseType_PROD`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`ExpenseType_PROD` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`ExpenseType_PROD` (
+ `ExpTypeId` INT NOT NULL AUTO_INCREMENT,
+ `ExpenseType` VARCHAR(255) NOT NULL,
+ `Description` VARCHAR(255),
+ PRIMARY KEY (`ExpTypeId`));
+ 
+-- -----------------------------------------------------
+-- Table `pb_db`.`ProductQuality_PROD`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`ProductQuality_PROD` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`ProductQuality_PROD` (
+ `QualityId` INT NOT NULL AUTO_INCREMENT,
+ `QualityName` VARCHAR(255) NOT NULL,
+ `Description` VARCHAR(255),
+ PRIMARY KEY (`QualityId`));
+ 
+-- -----------------------------------------------------
+-- Table `pb_db`.`ProductBrand_PROD`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`ProductBrand_PROD` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`ProductBrand_PROD` (
+ `BrandId` INT NOT NULL AUTO_INCREMENT,
+ `BrandName` VARCHAR(255) NOT NULL,
+ `Description` VARCHAR(255),
+ PRIMARY KEY (`BrandId`));
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`SupplierInfo_PROD`
@@ -203,8 +253,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`SupplierInfo_PROD` (
  CONSTRAINT `CategoryId`
  FOREIGN KEY (`CategoryId`)
  REFERENCES `pb_db`.`SupplierCategory_PROD` (`CategoryId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
  
  -- -----------------------------------------------------
 -- Table `pb_db`.`FarmInfo_PROD`
@@ -214,14 +264,15 @@ DROP TABLE IF EXISTS `pb_db`.`FarmInfo_PROD` ;
 CREATE TABLE IF NOT EXISTS `pb_db`.`FarmInfo_PROD` (
  `FarmId` INT NOT NULL AUTO_INCREMENT,
  `FarmName` VARCHAR(255) NOT NULL,
+ `FarmSize` INT NOT NULL,
  `SupplierId` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`FarmId`), 
  INDEX `SupplierId_idx` (`SupplierId` ASC), 
  CONSTRAINT `SupplierId_FI`
  FOREIGN KEY (`SupplierId`)
  REFERENCES `pb_db`.`SupplierInfo_PROD` (`SupplierId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
  
  -- -----------------------------------------------------
 -- Table `pb_db`.`TruckInfo_PROD`
@@ -240,8 +291,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`TruckInfo_PROD` (
  CONSTRAINT `SupplierId_TI`
  FOREIGN KEY (`SupplierId`)
  REFERENCES `pb_db`.`SupplierInfo_PROD` (`SupplierId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
  
 -- -----------------------------------------------------
 -- Table `pb_db`.`ProductInfo_PROD`
@@ -250,18 +301,30 @@ DROP TABLE IF EXISTS `pb_db`.`ProductInfo_PROD` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`ProductInfo_PROD` (
  `ProductCode` VARCHAR(255) NOT NULL,
- `BrandName` VARCHAR(255) NOT NULL,
- `Quality` VARCHAR(255) NOT NULL,
- `ProductPhoto` BLOB NOT NULL,
+ `BrandId` INT NOT NULL,
+ `QualityId` INT NOT NULL,
+ `ProductPhoto` VARCHAR(255) NULL,
  `SellingPrice` INT NOT NULL,
  `SupplierId` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`ProductCode`), 
  INDEX `SupplierId_idx` (`SupplierId` ASC), 
+ INDEX `BrandId_idx` (`BrandId` ASC),
+ INDEX `QualityId_idx` (`QualityId` ASC),
  CONSTRAINT `SupplierId_PI`
  FOREIGN KEY (`SupplierId`)
  REFERENCES `pb_db`.`SupplierInfo_PROD` (`SupplierId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `BrandId_PI`
+ FOREIGN KEY (`BrandId`)
+ REFERENCES `pb_db`.`ProductBrand_PROD` (`BrandId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `QualityId_PI`
+ FOREIGN KEY (`QualityId`)
+ REFERENCES `pb_db`.`ProductQuality_PROD` (`QualityId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`CaseDetails_PROD`
@@ -271,17 +334,23 @@ DROP TABLE IF EXISTS `pb_db`.`CaseDetails_PROD` ;
 CREATE TABLE IF NOT EXISTS `pb_db`.`CaseDetails_PROD` (
  `CaseCode` VARCHAR(255) NOT NULL,
  `CaseName` VARCHAR(255) NOT NULL,
- `BrandName` VARCHAR(255) NOT NULL,
- `CasePhoto` BLOB NOT NULL,
+ `BrandId` INT NOT NULL,
+ `CasePhoto` VARCHAR(255) NULL,
  `PurchasePrice` INT NOT NULL,
  `SupplierId` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`CaseCode`), 
+ INDEX `BrandId_idx` (`BrandId` ASC),
  INDEX `SupplierId_idx` (`SupplierId` ASC), 
  CONSTRAINT `SupplierId_CD`
  FOREIGN KEY (`SupplierId`)
  REFERENCES `pb_db`.`SupplierInfo_PROD` (`SupplierId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `BrandId_CD`
+ FOREIGN KEY (`BrandId`)
+ REFERENCES `pb_db`.`ProductBrand_PROD` (`BrandId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 
@@ -303,8 +372,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`POSInfo_SAL` (
  CONSTRAINT `EmployeeID_POSI`
  FOREIGN KEY (`EmployeeID`)
  REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeID`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 
@@ -314,30 +383,52 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`POSInfo_SAL` (
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
+-- Table `pb_db`.`BatchRange_ACC`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`BatchRange_ACC` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`BatchRange_ACC` (
+ `BatchRangeId` VARCHAR(255) NOT NULL,
+ `StartingNumber` INT NOT NULL,
+ `EndingNumber` INT NOT NULL,
+ `SFIndication` VARCHAR(1) NOT NULL,
+ `Description` VARCHAR(255),
+ PRIMARY KEY (`BatchRangeId`));
+
+-- -----------------------------------------------------
 -- Table `pb_db`.`BatchDetails_ACC`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pb_db`.`BatchDetails_ACC` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`BatchDetails_ACC` (
- `ControlNumber` VARCHAR(255) NOT NULL,
+ `BatchId` INT NOT NULL AUTO_INCREMENT,
+ `ControlNumber` INT NOT NULL,
+ `BatchRangeId` VARCHAR(255) NOT NULL,
  `SupplierId` VARCHAR(255) NOT NULL,
  `RegNumber` VARCHAR(255) NOT NULL,
- `DateDispatched` DATETIME NOT NULL,
- `DateArrived` DATETIME NOT NULL,
- `BatchDocument` BLOB NOT NULL,
- PRIMARY KEY (`ControlNumber`), 
+ `DateDispatched` DATE NOT NULL,
+ `DateArrived` DATE NOT NULL,
+ `BatchDocument` VARCHAR(255) NOT NULL,
+ `RangeCycle` INT NOT NULL,
+ PRIMARY KEY (`BatchId`), 
  INDEX `SupplierId_idx` (`SupplierId` ASC), 
  INDEX `RegNumber_idx` (`RegNumber` ASC),
+ INDEX `BatchRangeId_idx` (`BatchRangeId` ASC),
  CONSTRAINT `SupplierId_BD`
  FOREIGN KEY (`SupplierId`)
  REFERENCES `pb_db`.`SupplierInfo_PROD` (`SupplierId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `RegNumber_BD`
  FOREIGN KEY (`RegNumber`)
  REFERENCES `pb_db`.`TruckInfo_PROD` (`RegNumber`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `BatchRangeId_BD`
+ FOREIGN KEY (`BatchRangeId`)
+ REFERENCES `pb_db`.`BatchRange_ACC` (`BatchRangeId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`ReceiveProduct_ACC`
@@ -346,37 +437,37 @@ DROP TABLE IF EXISTS `pb_db`.`ReceiveProduct_ACC` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`ReceiveProduct_ACC` (
  `ProductReceiptNumber` INT NOT NULL AUTO_INCREMENT,
- `ProductCode` VARCHAR(255) NOT NULL,
- `ControlNumber` VARCHAR(255) NOT NULL,
+ `BatchId` INT NOT NULL,
+ `ProductCode` VARCHAR(255) NOT NULL, 
  `FarmId` INT NOT NULL,
  `Quantity` INT NOT NULL,
  `CaseCode` VARCHAR(255) NOT NULL,
  `DateReceived` DATETIME NOT NULL,
  PRIMARY KEY (`ProductReceiptNumber`), 
  INDEX `ProductCode_idx` (`ProductCode` ASC), 
- INDEX `ControlNumber_idx` (`ControlNumber` ASC),
+ INDEX `BatchId_idx` (`BatchId` ASC),
  INDEX `FarmId_idx` (`FarmId` ASC),
  INDEX `CaseCode_idx` (`CaseCode` ASC),
  CONSTRAINT `ProductCode_RP`
  FOREIGN KEY (`ProductCode`)
  REFERENCES `pb_db`.`ProductInfo_PROD` (`ProductCode`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
- CONSTRAINT `ControlNumber_RP`
- FOREIGN KEY (`ControlNumber`)
- REFERENCES `pb_db`.`BatchDetails_ACC` (`ControlNumber`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `BatchId_RP`
+ FOREIGN KEY (`BatchId`)
+ REFERENCES `pb_db`.`BatchDetails_ACC` (`BatchId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `FarmId_RP`
  FOREIGN KEY (`FarmId`)
  REFERENCES `pb_db`.`FarmInfo_PROD` (`FarmId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `CaseCode_RP`
  FOREIGN KEY (`CaseCode`)
  REFERENCES `pb_db`.`CaseDetails_PROD` (`CaseCode`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`DispatchProduct_ACC`
@@ -397,13 +488,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`DispatchProduct_ACC` (
  CONSTRAINT `ProductReceiptNumber_DP`
  FOREIGN KEY (`ProductReceiptNumber`)
  REFERENCES `pb_db`.`ReceiveProduct_ACC` (`ProductReceiptNumber`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `POSId_DP`
  FOREIGN KEY (`POSId`)
  REFERENCES `pb_db`.`POSInfo_SAL` (`POSId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`BatchExp_ACC`
@@ -412,17 +503,17 @@ DROP TABLE IF EXISTS `pb_db`.`BatchExp_ACC` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`BatchExp_ACC` (
  `BatchExpId` INT NOT NULL AUTO_INCREMENT,
- `ControlNumber` VARCHAR(255) NOT NULL,
+ `BatchId` INT NOT NULL,
  `FreighCost` INT NOT NULL,
  `iva` INT NOT NULL,
  `retiva` INT NOT NULL,
  PRIMARY KEY (`BatchExpId`),
- INDEX `ControlNumber_idx` (`ControlNumber` ASC), 
- CONSTRAINT `ControlNumber_BC`
- FOREIGN KEY (`ControlNumber`)
- REFERENCES `pb_db`.`BatchDetails_ACC` (`ControlNumber`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ INDEX `BatchId_idx` (`BatchId` ASC), 
+ CONSTRAINT `BatchId_BC`
+ FOREIGN KEY (`BatchId`)
+ REFERENCES `pb_db`.`BatchDetails_ACC` (`BatchId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
  
  
  
@@ -473,8 +564,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`ProductReceived_SAL` (
  CONSTRAINT `DispatchRefNum_PR`
  FOREIGN KEY (`DispatchRefNum`)
  REFERENCES `pb_db`.`DispatchProduct_ACC` (`DispatchRefNum`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`SaleProductReceived_SAL`
@@ -495,13 +586,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`SaleProductReceived_SAL` (
  CONSTRAINT `ProductReceiptId_SPR`
  FOREIGN KEY (`ProductReceiptId`)
  REFERENCES `pb_db`.`ProductReceived_SAL` (`ProductReceiptId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `CustomerID_SPR`
  FOREIGN KEY (`CustomerID`)
  REFERENCES `pb_db`.`CustomerDetails_SAL` (`CustomerID`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`POSExpDetails_SAL`
@@ -521,13 +612,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`POSExpDetails_SAL` (
  CONSTRAINT `ProductReceiptId_PE`
  FOREIGN KEY (`ProductReceiptId`)
  REFERENCES `pb_db`.`ProductReceived_SAL` (`ProductReceiptId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `POSExpTypeId_PE`
  FOREIGN KEY (`POSExpTypeId`)
  REFERENCES `pb_db`.`POSExpTypes_SAL` (`POSExpTypeId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`CollectPayment_SAL`
@@ -546,8 +637,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`CollectPayment_SAL` (
  CONSTRAINT `SalesRef_CP`
  FOREIGN KEY (`SalesRef`)
  REFERENCES `pb_db`.`SaleProductReceived_SAL` (`SalesRef`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`RegisterDeffectiveProd_SAL`
@@ -564,8 +655,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`RegisterDeffectiveProd_SAL` (
  CONSTRAINT `ProductReceiptId_RDP`
  FOREIGN KEY (`ProductReceiptId`)
  REFERENCES `pb_db`.`ProductReceived_SAL` (`ProductReceiptId`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 
@@ -600,8 +691,8 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`UserRole_ADM` (
  CONSTRAINT `PermissionID_URS`
  FOREIGN KEY (`PermissionID`)
  REFERENCES `pb_db`.`UserPermission_ADM` (`PermissionID`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 -- -----------------------------------------------------
@@ -621,13 +712,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`UserDetails_ADM` (
  CONSTRAINT `RoleID_UD`
  FOREIGN KEY (`RoleID`)
  REFERENCES `pb_db`.`UserRole_ADM` (`RoleID`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT,
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
  CONSTRAINT `EmployeeID_UD`
  FOREIGN KEY (`EmployeeID`)
  REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeID`)
- ON DELETE RESTRICT
- ON UPDATE RESTRICT);
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`MOTD_ADM`

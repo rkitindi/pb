@@ -17,8 +17,8 @@
            <div id="navbar">
              <ul>
                  <li><a href="../frontend/index.html">HOME</a></li>
-                 <li><a href="../hr-module/hr-mod.php">HR</a></li>
-				 <li><a href="../prod-module/prod-mod.php">PRODUCTION</a></li>
+                 <li><a href="../hr-module/hr-mod.html">HR</a></li>
+				 <li><a href="../prod-module/prod-mod.html">PRODUCTION</a></li>
                  <li><a href="#">ACCOUNTING</a></li>
                  <li><a href="../sales-module/sales-mod.php">SALES</a></li>
 				 <li><a href="../finance-module/finance-mod.php">FINANCE</a></li>
@@ -38,7 +38,8 @@
 					<ol>
 					    <li><a id="batch-ops" href="#">Batches</a></li>
 						<li><a id="prod-ops" href="#">Products</a></li>
-						<li><a id="exops" href="#">Expenses</a></li>
+						<li><a id="expenses-ops" href="#">Expenses</a></li>
+						<li><a id="setup" href="#">Setup</a></li>
 					</ol>
 				</div> 
 			 </div>
@@ -53,17 +54,17 @@
         </div>
 	</div>
 	<script type="text/javascript"> 
-			$("#exops").click(function(){
-                $("#mod_display").load("forms/expenses/pos_operations.html"); 
+			$("#expenses-ops").click(function(){
+                $("#mod_display").load("forms/expenses/operations_expenses.html"); 
             });
 			$("#batch-ops").click(function(){
                 $("#mod_display").load("forms/batch/batch_operations.html"); 
             });
 			$("#prod-ops").click(function(){
-                $("#mod_display").load("forms/product/product_operations.html"); 
+                $("#mod_display").load("forms/product/product_operations-types.html"); 
             });
-			$("#cust-ops").click(function(){
-                $("#mod_display").load("forms/customer/customer_operations.html"); 
+			$("#setup").click(function(){
+                $("#mod_display").load("forms/setup/setup_operations.html"); 
             });
 			$("#supp-ops").click(function(){
                 $("#mod_display").load("forms/supplier/supplier_operation-types.php"); 

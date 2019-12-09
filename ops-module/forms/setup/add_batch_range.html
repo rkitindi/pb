@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BATCH RANGES DETAILS</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../../../frontend/style.css">
+</head>
+<body>
+
+	<div id="form_wrapper">
+			<div id="form_section1">SUPPLY BATCH NUMBER RANGE DETAILS BELOW</div>
+			<form id="bnrform">
+				<div id="form_section2">	
+					<label for="brid">Batch Range ID:</label><br>
+					<input type="text" id="brid" name="brid" required placeholder="EXANMPLE RANGE001" style="text-transform:uppercase" onkeypress="return AvoidSpace(event)" onkeydown="limit(this);" onkeyup="limit(this);" /><br>
+					<label for="stnum">Starting Number:</label><br>
+					<input type="number" id="stnum" name="stnum" required placeholder="BATCH RANGE STARTING NUMBER" step="1" pattern="\d+" /><br>
+					<label for="ennum">Ending Number:</label><br>
+					<input type="number" id="ennum" name="ennum" required placeholder="BATCH RANGE RNDING NUMBER" step="1" pattern="\d+" /><br>
+					<label for="sfflag">S/F Flag Indication:</label>
+					<input type="radio" id="sfflag" name="sfflag" value="Y"><label for="sfflag">YES</label>
+            		<input type="radio" id="sfflag" name="sfflag" value="N"><label for="sfflag">NO</label><br><br>
+					<label for="description">Description:</label><br>
+					<input type="text" id="description" name="description" required placeholder="Batch Number range description" /><br>
+	
+				</div>
+				<div id="form_bottons">
+					<div id="submit"><input id="btnSubmit" type="submit" name="insert" value="SUBMIT" /></div>
+					<div id="reset"><input type="reset" value="RESET" /></div>
+				</div>
+			</form>
+	</div>
+	
+	<script> 
+	
+        $("#btnSubmit").click(function(){
+            $.post("scripts/insert_batch_number_range.php", $("#bnrform").serialize(), function(response) {
+				$("#mod_display").html(response);
+			});
+			return false;
+        });
+		
+		function AvoidSpace(event) {
+			var k = event ? event.which : window.event.keyCode;
+			if (k == 32) return false;
+		}
+			
+		function limit(element){
+			var max_chars = 8;
+			if(element.value.length > max_chars) {
+					element.value = element.value.substr(0, max_chars);
+			}
+		}		
+		
+	</script>
+		
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BATCH NUMBERS</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="REGISTER BATCH# RANGE" id="bac"><br>
+					<input type="button" value="EDIT BATCH# RANGE" id="bp"><br>
+					<input type="button" value="DELETE BATCH# RANGE" id="dp"><br>					
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#bac").click(function(){
+                $("#mod_display").load("forms/setup/add_batch_range.html"); 
+            });
+			$("#bp").click(function(){
+                $("#mod_display").load("forms/setup/search_batch_range.html"); 
+            });
+			$("#dp").click(function(){
+                $("#mod_display").load("forms/setup/del_search_batch_range.html"); 
+            });
+		</script>
+</body>
+</html>

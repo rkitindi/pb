@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PRODUCT QUALITY</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+
+	<div id="form_wrapper">
+			<div id="form_section1">FILL THIS FORM BELOW TO REGISTER PRODUCT QUALITY</div>
+			<form id="motd-form">
+				<div id="form_section2">	
+					<label for="qname">Quality Name</label><br>
+					<input type="text" id="qname" name="qname" required placeholder="examples PREMIUM, MANO, DEDO" style="text-transform:uppercase" onkeypress="return AvoidSpace(event)"><br>
+					<label for="description">Description:</label><br>
+					<input type="text" id="description" name="description" required placeholder="Type Department description"><br>
+				</div>
+				<div id="form_bottons">
+					<div id="submit"><input id="search" type="submit" name="insert" value="SUBMIT"></div>
+					<div id="reset"><input type="reset" value="RESET" /> </form></div>
+				</div>
+			</form>
+	</div>
+	
+		<script> 
+            $("#search").click(function(){
+               	$.post("scripts/insert_product_quality.php", $("#motd-form").serialize(), function(response) {
+					$("#mod_display").html(response);
+				});
+			return false;
+            });
+			
+			function AvoidSpace(event) {
+				var k = event ? event.which : window.event.keyCode;
+				if (k == 32) return false;
+			}
+			
+		</script>
+		
+
+</body>
+</html>

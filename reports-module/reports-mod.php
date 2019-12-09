@@ -17,8 +17,8 @@
            <div id="navbar">
              <ul>
                  <li><a href="../frontend/index.html">HOME</a></li>
-                 <li><a href="../hr-module/hr-mod.php">HR</a></li>
-				 <li><a href="../prod-module/prod-mod.php">PRODUCTION</a></li>
+                 <li><a href="../hr-module/hr-mod.html">HR</a></li>
+				 <li><a href="../prod-module/prod-mod.html">PRODUCTION</a></li>
                  <li><a href="../ops-module/operations-mod.php">ACCOUNTING</a></li>
                  <li><a href="../sales-module/sales-mod.php">SALES</a></li>
 				 <li><a href="../finance-module/finance-mod.php">FINANCE</a></li>
