@@ -410,6 +410,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`BatchDetails_ACC` (
  `DateArrived` DATE NOT NULL,
  `BatchDocument` VARCHAR(255) NOT NULL,
  `RangeCycle` INT NOT NULL,
+ `ProductCount` INT NOT NULL,
  PRIMARY KEY (`BatchId`), 
  INDEX `SupplierId_idx` (`SupplierId` ASC), 
  INDEX `RegNumber_idx` (`RegNumber` ASC),
@@ -437,12 +438,12 @@ DROP TABLE IF EXISTS `pb_db`.`ReceiveProduct_ACC` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`ReceiveProduct_ACC` (
  `ProductReceiptNumber` INT NOT NULL AUTO_INCREMENT,
- `BatchId` INT NOT NULL,
- `ProductCode` VARCHAR(255) NOT NULL, 
+ `ProductCode` VARCHAR(255) NOT NULL,
+ `BatchId` INT NOT NULL,  
  `FarmId` INT NOT NULL,
  `Quantity` INT NOT NULL,
  `CaseCode` VARCHAR(255) NOT NULL,
- `DateReceived` DATETIME NOT NULL,
+ `DateReceived` DATE NOT NULL,
  PRIMARY KEY (`ProductReceiptNumber`), 
  INDEX `ProductCode_idx` (`ProductCode` ASC), 
  INDEX `BatchId_idx` (`BatchId` ASC),

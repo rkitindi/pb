@@ -8,6 +8,7 @@ require_once "class.config.php";
 	$truckid = "";
 	$ddisp = "";
 	$darr = "";
+	$pcount = "";
 	$imagepath = "";
 	$target_dir = "../batchdocuments/";
 	$uploadOk = 1;
@@ -27,7 +28,7 @@ class batchdetailActions{
 	
 	
 // This function validates batch with Photo DETAILS before Insert
-	function validate_batch_details_with_photo($cnum,$supid,$truckid,$check,$target_file,$filesize,$file_temp,$filename,$imageFileType,$ddisp,$darr){
+	function validate_batch_details_with_photo($cnum,$supid,$truckid,$check,$target_file,$filesize,$file_temp,$filename,$imageFileType,$ddisp,$darr,$pcount){
 		
 		$cnum1 = $cnum;
 		$RID = $this->get_batchrange_id($cnum,$cnum1);
@@ -77,11 +78,17 @@ class batchdetailActions{
 		}elseif(file_exists($target_file)){			
 			echo "Sorry, file already exists. Please select another file";
 			exit;
-		}elseif( $brnid_exist == 0){		
+		}elseif(empty($pcount)){			
+			echo "PRODUCT COUNT cannot be empty";
+			exit;			
+		}elseif(!is_integer($pcount) && $pcount <= 0){
+			echo "ONLY POSITIVE INTERGERS ARE ALLOWED";  
+            exit;			
+	    }elseif( $brnid_exist == 0){		
 			$rangeID = $this->get_batchrange_id($cnum,$cnum1);
 			$cycle = 1;
 			$imagepath = $this->upload_image_($target_file,$file_temp,$filename);
-			$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);	
+			$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);	
 			echo "BATCH CONTROL NUMBER:  ".$cnum."  DETAILS added successfully, Cycle is:  ".$cycle;
 			exit;				
 		}else{
@@ -89,7 +96,8 @@ class batchdetailActions{
 			$R_ID = $this->get_batchrange_id($cnum,$cnum1);	
 			$rangeID = $this->get_latest_batchrange_id($R_ID);	
 			$cycle = $this->get_latest_cycle($rangeID);	
-			$range = $this->get_range($rangeID);	
+			//$range = $this->get_range($rangeID);	
+			$range = 2;
 			$dor = DateTime::createFromFormat('Y-m-d', $darr);
 			$ArriveYear = $dor->format('Y');
 			$CNUM_exists = $this->check_CNUM_exist($cnum,$rangeID,$cycle);
@@ -106,7 +114,7 @@ class batchdetailActions{
 				$cycle = $cycle + 1; //Increment Cycle
 				$cnum = $this->get_first_cnum_in_range($rangeID); //reset Control Number
 				$imagepath = $this->upload_image_($target_file,$file_temp,$filename);
-				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);
+				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);
 				echo "End of Range, NEW Cycle:  ".$cycle."  started, First Control Number:  ".$cnum.",  in a RANGE has been USED instead,  ";
 				echo "BATCH DETAILS added successfully";
 				exit;
@@ -116,7 +124,7 @@ class batchdetailActions{
 				$cycle = $cycle + 1; //Increment Cycle
 				$cnum = $this->get_first_cnum_in_range($rangeID); //reset Control Number
 				$imagepath = $this->upload_image_($target_file,$file_temp,$filename);
-				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);
+				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);
 				echo "It´s NEW YEAR, NEW Cycle:  ".$cycle."  Started, First Control Number:  ".$cnum.", in a RANGE has been USED instead.  ";
 				echo "BATCH DETAILS added successfully";
 				exit;	
@@ -124,7 +132,7 @@ class batchdetailActions{
 			}else{
 				
 				$imagepath = $this->upload_image_($target_file,$file_temp,$filename);
-				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);	
+				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);	
 				echo "BATCH CONTROL NUMBER  ".$cnum."  DETAILS added successfully, Cycle is: ".$cycle;
 				
 			}
@@ -133,7 +141,7 @@ class batchdetailActions{
 	}
 	
 // This function validates batch without photo details before insert
-	function validate_batch_details_without_photo($cnum,$supid,$truckid,$imagepath,$ddisp,$darr){
+	function validate_batch_details_without_photo($cnum,$supid,$truckid,$imagepath,$ddisp,$darr,$pcount){
 		
 		$cnum1 = $cnum;
 		$RID = $this->get_batchrange_id($cnum,$cnum1);
@@ -191,11 +199,21 @@ class batchdetailActions{
 			echo "DISPATCH DATE cannot be later than TODAY";
 			exit;
 			
-		}elseif($brnid_exist == 0){
+		}elseif(empty($pcount)){	
+		
+			echo "PRODUCT COUNT cannot be empty";
+			exit;		
+			
+		}elseif(!is_integer($pcount) && $pcount <= 0){
+			
+			echo "ONLY POSITIVE INTERGERS ARE ALLOWED";  
+            exit;	
+			
+	    }elseif($brnid_exist == 0){
 			
 			$rangeID = $this->get_batchrange_id($cnum,$cnum1);
 			$cycle = 1;		
-			$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);	
+			$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);	
 			echo "BATCH CONTROL NUMBER:  ".$cnum."  DETAILS added successfully, Cycle is:  ".$cycle;
 			exit;	
 			
@@ -204,7 +222,8 @@ class batchdetailActions{
 			$R_ID = $this->get_batchrange_id($cnum,$cnum1);	
 			$rangeID = $this->get_latest_batchrange_id($R_ID);	
 			$cycle = $this->get_latest_cycle($rangeID);	
-			$range = $this->get_range($rangeID);	
+			//$range = $this->get_range($rangeID);	
+			$range = 2;
 			$dor = DateTime::createFromFormat('Y-m-d', $darr);
 			$ArriveYear = $dor->format('Y');
 			$CNUM_exists = $this->check_CNUM_exist($cnum,$rangeID,$cycle);
@@ -221,7 +240,7 @@ class batchdetailActions{
 				
 				$cycle = $cycle + 1; //Increment Cycle
 				$cnum = $this->get_first_cnum_in_range($rangeID); //reset Control Number
-				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);
+				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);
 				echo "We started NEW Cycle:  ".$cycle." First Control Number"." ".$cnum." "."In a RANGE has been USED instead ";
 				echo "BATCH CONTROL NUMBER  ".$cnum."  DETAILS added successfully";
 				exit;	
@@ -230,14 +249,14 @@ class batchdetailActions{
 			
 				$cycle = $cycle + 1; //Increment Cycle
 				$cnum = $this->get_first_cnum_in_range($rangeID); //reset Control Number
-				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);
+				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);
 				echo "It´s NEW YEAR, NEW Cycle:  ".$cycle."  Started, First Control Number:  ".$cnum."  in a RANGE has been USED instead.  ";
 				echo "BATCH DETAILS added successfully";
 				exit;	
 				
 			}else{
 				
-				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle);					
+				$this->insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount);					
 				echo "BATCH CONTROL NUMBER:  ".$cnum."  DETAILS added successfully, Cycle is:  ".$cycle;	
 				
 			}
@@ -411,10 +430,10 @@ class batchdetailActions{
 	}	
 	
 // Insert Function
-    function insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle){
+    function insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount){
 		
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`BatchDetails_ACC` (ControlNumber, BatchRangeId, SupplierId, RegNumber, DateDispatched, DateArrived, BatchDocument,RangeCycle) VALUES (?,?,?,?,?,?,?,?)");
-		$values = array($cnum,$rangeID,$supid,$truckid,$ddisp,$darr,$imagepath,$cycle);
+		$query = $this->link->prepare("INSERT INTO `pb_db`.`BatchDetails_ACC` (ControlNumber, BatchRangeId, SupplierId, RegNumber, DateDispatched, DateArrived, BatchDocument,RangeCycle,ProductCount) VALUES (?,?,?,?,?,?,?,?,?)");
+		$values = array($cnum,$rangeID,$supid,$truckid,$ddisp,$darr,$imagepath,$cycle,$pcount);
 		$query->execute($values);			
     }	
 }
@@ -432,8 +451,9 @@ if(($_SERVER["REQUEST_METHOD"] == "POST") && isset($_FILES['fileToUpload'])){
 		$truckid = trim($_POST['truckid'] ?? '');
 		$ddisp = trim($_POST['ddisp'] ?? '');
 		$darr = trim($_POST['darr'] ?? '');	
+		$pcount = trim($_POST['pcount'] ?? '');	
 		
-		echo $actionwithoutfileupload ->validate_batch_details_without_photo($cnum,$supid,$truckid,$imagepath,$ddisp,$darr);
+		echo $actionwithoutfileupload ->validate_batch_details_without_photo($cnum,$supid,$truckid,$imagepath,$ddisp,$darr,$pcount);
 		
 	}else{	
 	
@@ -442,6 +462,7 @@ if(($_SERVER["REQUEST_METHOD"] == "POST") && isset($_FILES['fileToUpload'])){
 		$truckid = trim($_POST['truckid'] ?? '');
 		$ddisp = trim($_POST['ddisp'] ?? '');
 		$darr = trim($_POST['darr'] ?? '');	
+		$pcount = trim($_POST['pcount'] ?? '');	
 	
 		$file_temp = $_FILES['fileToUpload']['tmp_name'];  
 		$filename = $_FILES['fileToUpload']['name'];
@@ -450,7 +471,7 @@ if(($_SERVER["REQUEST_METHOD"] == "POST") && isset($_FILES['fileToUpload'])){
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));	
 		$check = getimagesize($file_temp);	
 		
-		echo $actionwithfileupload->validate_batch_details_with_photo($cnum,$supid,$truckid,$check,$target_file,$filesize,$file_temp,$filename,$imageFileType,$ddisp,$darr);
+		echo $actionwithfileupload->validate_batch_details_with_photo($cnum,$supid,$truckid,$check,$target_file,$filesize,$file_temp,$filename,$imageFileType,$ddisp,$darr,$pcount);
 	
 	}
 

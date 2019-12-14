@@ -50,6 +50,8 @@
 					<label for="fileToUpload">Upload Batch Document:</label><br>
 					<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 					<input type="file" id="fileToUpload" name="fileToUpload" /><br>
+					<label for="pcount">Product Count:</label><br>
+					<input type="number" id="pcount" name="pcount" required placeholder="ENTER PRODUCT COUNT" step="1" pattern="\d+" /><br>
 				</div>
 				<div id="form_bottons">
 					<div id="submit"><input id="btnSubmit" type="submit" name="insert" value="SUBMIT" /></div>

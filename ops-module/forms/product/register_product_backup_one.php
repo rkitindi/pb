@@ -1,16 +1,14 @@
 <?php
 	// Include setup.php file
-	include "../../scripts/accounting_queries.php";
+	include "../../../prod-module/scripts/production_setup.php";
 	
 	// read the product categories from the database
-	$product_code_list = new queryACCOUNTING();
-	$farm_name_list = new queryACCOUNTING();
-	$case_name_list = new queryACCOUNTING();
-	$control_number_list = new queryACCOUNTING();
+	$product_code_list = new setupPRODUCTION();
+	$farm_name_list = new setupPRODUCTION();
+	$case_name_list = new setupPRODUCTION();
 	$prodcode = $product_code_list->fetch_product_code_list();
 	$farmname = $farm_name_list->fetch_farmname_list();
 	$cases = $case_name_list->fetch_casename_list();
-	$controlnumber = $control_number_list->fetch_batchnumber_cycle_list()
 	
 ?>
 
@@ -38,19 +36,15 @@
 							<?php endforeach; ?>
 					</select><br>
 					<label for="cnum">Control Number:</label><br>
-					<select name="cnum">
-						<option selected>Please Select from List</option>
-							<?php foreach ($controlnumber as $key => $item): ?> 
-								<?php $cnum = $item['ControlNumber']; $cyc = $item['RangeCycle']; $pc = $item['ProductCount']; $rmng = $item['Remain'];   ?>	 
-								<option value="<?php echo $cnum; ?>.<?php echo $cyc; ?>">CONTROL#: <?php echo $cnum; ?> | PRODUCT COUNT: <?php echo $pc; ?> | REMAINING: <?php echo $rmng; ?></option>		  
-							<?php endforeach; ?>
-					</select><br>
+					<input type="number" id="cnum" name="cnum" required placeholder="ENTER BATCH CONTROL NUMBER" step="1" pattern="\d+" /><br>
+					<label for="cynum">Cycle Number:</label><br>
+					<input type="number" id="cynum" name="cynum" required placeholder="ENTER CYCLE NUMBER" step="1" pattern="\d+" /><br>
 					<label for="fname">Farm Name:</label><br>
 					<select name="fname">
 						<option selected>Please Select from List</option>
 							<?php foreach ($farmname as $key => $item): ?> 
 								<?php $fid = $item['FarmId']; $fname = $item['FarmName']; ?>	 
-								<option value="<?php echo $fid; ?>"><?php echo $fname; ?></option>		  
+								<option value="<?php echo $fid; ?>"><?php echo $fname; ?> </option>		  
 							<?php endforeach; ?>
 					</select><br>
 					<label for="quantity">Quantity</label><br>

@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`BatchDetails_ACC` (
  ALTER TABLE `pb_db`.`BatchDetails_ACC` ADD COLUMN `BatchId` INT NOT NULL FIRST;
  ALTER TABLE `pb_db`.`BatchDetails_ACC` ADD COLUMN `BatchRangeId` VARCHAR(255) NOT NULL AFTER `ControlNumber`;
  ALTER TABLE `pb_db`.`BatchDetails_ACC` ADD COLUMN `RangeCycle` INT NOT NULL AFTER `BatchDocument`;
+ ALTER TABLE `pb_db`.`BatchDetails_ACC` ADD COLUMN `ProductCount` INT NOT NULL AFTER `RangeCycle`;
  
 -- -----------------------------------------------------
 -- CHANGE COLUMN NAME

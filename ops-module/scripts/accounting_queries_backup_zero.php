@@ -3,7 +3,7 @@
 require_once "class.config.php";
 
 
-class setupPRODUCTION{
+class queryACCOUNTING{
 
     public $link; 
 
@@ -14,14 +14,46 @@ class setupPRODUCTION{
         return $this->link;
     }
 	
-	function fetch_supcat_list(){
-		$query = $this->link->prepare("SELECT CategoryId, CategoryName FROM  `SupplierCategory_PROD`");
+		
+	function fetch_batchnumber_cycle_list(){
+		
+		$dispatched = $this->get_product_dispatched_count();
+		$received = $this->get_product_received_count();
+		
+		$query = $this->link->prepare("SELECT `pb_db`.`BatchDetails_ACC`.ControlNumber, `pb_db`.`BatchDetails_ACC`.RangeCycle, `pb_db`.`BatchDetails_ACC`.ProductCount  FROM `pb_db`.`BatchDetails_ACC` WHERE (`pb_db`.`BatchDetails_ACC`.BatchId NOT IN (SELECT `pb_db`.`ReceiveProduct_ACC`.BatchId FROM `pb_db`.`ReceiveProduct_ACC` WHERE `pb_db`.`ReceiveProduct_ACC`.BatchId IS NOT NULL)) OR (? <= ?)");
+		$values = array($received,$dispatched);
      	try{
-			$query->execute();
+			$query->execute($values);
 			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
 		}catch (PDOException $e){die($e->getMessage());}
 		return $result;
 	}	
+	
+	function get_product_dispatched_count(){
+		
+		$query = $this->link->prepare("SELECT `pb_db`.`BatchDetails_ACC`.ProductCount FROM `pb_db`.`BatchDetails_ACC`, `pb_db`.`ReceiveProduct_ACC` WHERE `pb_db`.`BatchDetails_ACC`.BatchId = `pb_db`.`ReceiveProduct_ACC`.BatchId");
+		try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($result as $key => $item){
+				$b = $item['ProductCount'];				
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		return $b;
+	} 
+	
+	function get_product_received_count(){
+		
+		$query = $this->link->prepare("SELECT COUNT(`pb_db`.`ReceiveProduct_ACC`.ProductCode) AS RECEIVED FROM `pb_db`.`ReceiveProduct_ACC`, `pb_db`.`BatchDetails_ACC`  WHERE `pb_db`.`ReceiveProduct_ACC`.BatchId = `pb_db`.`BatchDetails_ACC`.BatchId");
+		try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($result as $key => $item){
+				$a = $item['RECEIVED'];				
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		return $a;
+	} 
 
 	function fetch_expensetype_list(){
 		$query = $this->link->prepare("SELECT  ExpTypeId, ExpenseType FROM  `ExpenseType_PROD`");
