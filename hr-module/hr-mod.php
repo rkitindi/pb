@@ -66,11 +66,11 @@
 				 <li><a href="../prod-module/prod-mod.php" class="btn btn-primary btn-xs">PRODUCTION</a></li>
                  <li><a href="../ops-module/operations-mod.php" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
                  <li><a href="../sales-module/sales-mod.php" class="btn btn-primary btn-xs">SALES</a></li>
-				 <li><a href="../finance-module/finance-mod.html" class="btn btn-primary btn-xs">FINANCE</a></li>
-				 <li><a href="../mgmnt-module/mgmnt-mod.html" class="btn btn-primary btn-xs">MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.html" class="btn btn-primary btn-xs">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.html" class="btn btn-primary btn-xs">TRENDS</a></li>
-				 <li><a href="../admin-module/admin-mod.html" class="btn btn-primary btn-xs">ADMIN</a></li>
+				 <li><a href="../finance-module/finance-mod.php" class="btn btn-primary btn-xs">FINANCE</a></li>
+				 <li><a href="../mgmnt-module/mgmnt-mod.php" class="btn btn-primary btn-xs">MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a href="../admin-module/admin-mod.php" class="btn btn-primary btn-xs">ADMIN</a></li>
 			<?php }else{ ?>
 				<!-- VISIBLE TO HR DEPARTMENT ONLY -->
 			     <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
@@ -80,8 +80,8 @@
                  <li><a type="button" class="btn btn-primary btn-xs" disabled>SALES</a></li>
 				 <li><a type="button" class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
 				 <li><a type="button" class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.html">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.html">TRENDS</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
 				 <li><a type="button" class="btn btn-primary btn-xs" disabled>ADMIN</a></li>			
 			<?php } ?>
 			
@@ -108,7 +108,7 @@
         <!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
-           <div id="section_2">Report Problem</div>
+           <div id="section_2"><a id="repopro" href="#">Report Problem</a></div>
            <div id="section_3">
 		   		<form id="logout_form">
 					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
@@ -133,6 +133,10 @@
 			$("#setup").click(function(){
                 $("#mod_display").load("forms/setup_hr.html"); 
             });
+			
+			$("#repopro").click(function(){
+				$("#mod_display").load("forms/problems/report_problem.php"); 
+			});
 			
 			$("#logout_btn").click(function(){
 				$.get("scripts/logout.php", $("#logout_form").serialize(), function(response) {

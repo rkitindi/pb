@@ -3,7 +3,7 @@
 require_once "class.config.php";
 
 
-class queryADMIN{
+class queryREPORTS{
 
     public $link; 
 
@@ -13,15 +13,6 @@ class queryADMIN{
         $this->link = $db_connection->connect();   
         return $this->link;
     }
-	
-    function fetch_employee_list(){
-		$query = $this->link->prepare("SELECT PersonalInfo_HR.EmployeeId, CONCAT(PersonalInfo_HR.FirstNames, ' ', PersonalInfo_HR.LastNames) AS NAME FROM PersonalInfo_HR WHERE PersonalInfo_HR.EmployeeId NOT IN (SELECT EmployeeID FROM UserDetails_ADM);");
-     	try{
-			$query->execute();
-			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
-		}catch (PDOException $e){die($e->getMessage());}
-		return $result;
-	}
 	
 	function fetch_MOTD(){
 		$query = $this->link->prepare("SELECT Message FROM `pb_db`.`MOTD_ADM` ORDER BY MessageID DESC LIMIT 1");
@@ -34,6 +25,45 @@ class queryADMIN{
 		}catch (PDOException $e){die($e->getMessage());}
 		return $msg;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    function fetch_employee_list(){
+		$query = $this->link->prepare("SELECT PersonalInfo_HR.EmployeeId, CONCAT(FirstNames, ' ', LastNames) AS NAME FROM `pb_db`.`PersonalInfo_HR` WHERE DepartmentId = 5");
+     	try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}
+	
+
 	
 	function fetch_pos_list(){
 		$query = $this->link->prepare("SELECT  `pb_db`.`POSInfo_SAL`.POSId, `pb_db`.`POSInfo_SAL`.POSName FROM  `pb_db`.`POSInfo_SAL`");
@@ -50,15 +80,6 @@ class queryADMIN{
      	try{
 			$values = array($posid);
 			$query->execute($values);
-			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
-		}catch (PDOException $e){die($e->getMessage());}
-		return $result;
-	}
-	
-	function fetch_role_list(){
-		$query = $this->link->prepare("select * from UserRole_ADM;");
-     	try{
-			$query->execute();
 			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
 		}catch (PDOException $e){die($e->getMessage());}
 		return $result;
@@ -93,6 +114,7 @@ class queryADMIN{
 	}	
 
 	function fetch_user_permission($r_id){
+		// set array
 		$perm_list = array();
 		$query = $this->link->prepare("select `Role_Perm_ADM`.PermissionName AS PERM FROM `pb_db`.`Role_Perm_ADM` JOIN `pb_db`.`UserRole_ADM` ON `pb_db`.`UserRole_ADM`.RoleName = `pb_db`.`Role_Perm_ADM`.RoleName WHERE `pb_db`.`UserRole_ADM`.RoleID = ?");
      	try{
@@ -106,13 +128,88 @@ class queryADMIN{
 		}catch (PDOException $e){die($e->getMessage());}
 		
 	}
+
+	function fetch_pos_id($e_id){
+		$query = $this->link->prepare("SELECT  `pb_db`.`POSInfo_SAL`.POSId  FROM  `pb_db`.`POSInfo_SAL` WHERE EmployeeID = ?");
+     	try{
+			$values = array($e_id);
+			$query->execute($values);
+			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($results as $key => $item){ 
+				$posid = $item['POSId'];	
+				return $posid;
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
 	
+	}
+
+	function fetch_pcode_list($posid){
+		
+		$query = $this->link->prepare("select ProductReceived_SAL.ProductReceiptId, DispatchProduct_ACC.POSId, ReceiveProduct_ACC.ProductCode, (ProductReceived_SAL.Quantity - COALESCE(SUM(SaleProductReceived_SAL.Quantity),0) - COALESCE(SUM(DISTINCT RegisterDeffectiveProd_SAL.Quantity),0)) AS Stock FROM ProductReceived_SAL LEFT JOIN SaleProductReceived_SAL ON SaleProductReceived_SAL.ProductReceiptId = ProductReceived_SAL.ProductReceiptId LEFT JOIN RegisterDeffectiveProd_SAL ON RegisterDeffectiveProd_SAL.ProductReceiptId = ProductReceived_SAL.ProductReceiptId JOIN DispatchProduct_ACC ON DispatchProduct_ACC.DispatchRefNum = ProductReceived_SAL.DispatchRefNum JOIN ReceiveProduct_ACC ON ReceiveProduct_ACC.ProductReceiptNumber = DispatchProduct_ACC.ProductReceiptNumber GROUP BY 1 HAVING Stock > 0 AND DispatchProduct_ACC.POSId = ?");
+     	try{
+			$values = array($posid);
+			$query->execute($values);
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}
 	
+	function fetch_product_price($pcode){
+			
+		$query = $this->link->prepare("select SellingPrice FROM `pb_db`.`ProductInfo_PROD` WHERE ProductCode = ?");
+     	try{
+			$values = array($pcode);
+			$query->execute($values);
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($result as $key => $item){ 
+				$price = $item['SellingPrice'];	
+				return $price;
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		
+		
+	}	
+	
+	function fetch_customer_list(){
+		$query = $this->link->prepare("select CustomerId, BusinessName from `pb_db`.`CustomerDetails_SAL`");
+     	try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}
+	
+	function fetch_customer_debt($srn){
+			
+		$query = $this->link->prepare("SELECT SaleProductReceived_SAL.SalesRef, (SaleProductReceived_SAL.Quantity*SaleProductReceived_SAL.UnitPrice) AS TOTAL, COALESCE(SUM(CollectPayment_SAL.Amount),0) as PAID, ((SaleProductReceived_SAL.Quantity*SaleProductReceived_SAL.UnitPrice) - COALESCE(SUM(CollectPayment_SAL.Amount),0)) AS DEBT, CustomerDetails_SAL.ContactName, SaleProductReceived_SAL.PaymentMethod, DispatchProduct_ACC.POSId FROM SaleProductReceived_SAL LEFT JOIN CollectPayment_SAL ON CollectPayment_SAL.SalesRef = SaleProductReceived_SAL.SalesRef JOIN CustomerDetails_SAL ON CustomerDetails_SAL.CustomerId = SaleProductReceived_SAL.CustomerId JOIN ProductReceived_SAL ON ProductReceived_SAL.ProductReceiptId = SaleProductReceived_SAL.ProductReceiptId JOIN DispatchProduct_ACC ON DispatchProduct_ACC.DispatchRefNum = ProductReceived_SAL.DispatchRefNum GROUP BY 1 HAVING SaleProductReceived_SAL.PaymentMethod = 'credit' AND DEBT > 0 AND SaleProductReceived_SAL.SalesRef = ?");
+     	try{
+			$values = array($srn);
+			$query->execute($values);
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($result as $key => $item){ 
+				$tobepaid = $item['DEBT'];	
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		return $tobepaid;
+		
+	}
+
+	function fetch_sales_ref_number($posid){
+		$query = $this->link->prepare("SELECT SaleProductReceived_SAL.SalesRef, (SaleProductReceived_SAL.Quantity*SaleProductReceived_SAL.UnitPrice) AS TOTAL, COALESCE(SUM(CollectPayment_SAL.Amount),0) as PAID, ((SaleProductReceived_SAL.Quantity*SaleProductReceived_SAL.UnitPrice) - COALESCE(SUM(CollectPayment_SAL.Amount),0)) AS DEBT, CustomerDetails_SAL.ContactName, SaleProductReceived_SAL.PaymentMethod, DispatchProduct_ACC.POSId FROM SaleProductReceived_SAL LEFT JOIN CollectPayment_SAL ON CollectPayment_SAL.SalesRef = SaleProductReceived_SAL.SalesRef JOIN CustomerDetails_SAL ON CustomerDetails_SAL.CustomerId = SaleProductReceived_SAL.CustomerId JOIN ProductReceived_SAL ON ProductReceived_SAL.ProductReceiptId = SaleProductReceived_SAL.ProductReceiptId JOIN DispatchProduct_ACC ON DispatchProduct_ACC.DispatchRefNum = ProductReceived_SAL.DispatchRefNum GROUP BY 1 HAVING SaleProductReceived_SAL.PaymentMethod = 'credit' AND DEBT > 0 AND DispatchProduct_ACC.POSId = ?");
+     	try{
+			$values = array($posid);
+			$query->execute($values);
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}
+
+	
+
 	
 
 
 
-	
 	function fetch_batchnumber_cycle_list(){
 		
 		$query = $this->link->prepare("select BatchDetails_ACC.ControlNumber, BatchDetails_ACC.RangeCycle, BatchDetails_ACC.ProductCount, (BatchDetails_ACC.ProductCount - COUNT(ReceiveProduct_ACC.ProductCode)) AS Remain FROM ReceiveProduct_ACC RIGHT JOIN BatchDetails_ACC ON BatchDetails_ACC.BatchId=ReceiveProduct_ACC.BatchId GROUP BY 1 HAVING COUNT(ReceiveProduct_ACC.ProductCode) < BatchDetails_ACC.ProductCount ORDER BY ReceiveProduct_ACC.ProductCode ASC");
@@ -286,6 +383,26 @@ class queryADMIN{
 		return $result;
 	}
 	
+	
+}
+
+//Create Object 
+$selling_price = new queryREPORTS();
+$fetch_debt = new queryREPORTS();
+
+
+//if(!empty($_POST)){
+if(isset($_POST['name'])){
+    $pieces = explode(" ", $_POST['name']);
+	$pcode = trim($pieces[1]);
+	$price = $selling_price->fetch_product_price($pcode);
+	echo $price;
+}
+
+if(isset($_POST['SRN'])){
+	$srn = $_POST['SRN'];
+	$debpt = $fetch_debt->fetch_customer_debt($srn);
+	echo $debpt;
 }
 
 ?>

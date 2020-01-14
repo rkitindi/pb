@@ -72,8 +72,8 @@
                  <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
 				 <li><a href="#" class="btn btn-primary btn-xs">FINANCE</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a class="btn btn-primary btn-xs" disabled>REPORTS</a></li>
-                 <li><a class="btn btn-primary btn-xs" disabled>TRENDS</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>
 			<?php } ?>
              </ul>
@@ -81,7 +81,7 @@
         </div>
         <!-- CONTENT AREA  -->
         <div id="content_area">
-             <div id="mod_title">Enterprise Resources Planning - FINANCE MODULE</div>
+             <div id="mod_title">PRINCESS BANANA ERP - FINANCE MODULE</div>
              <div id="mod_menu"> 
 			 FINANCE MENU
 				<div class="list-type1">

@@ -59,7 +59,7 @@
 			<?php
 			//Visible to Admin only
 			if( ($role_name == "admin") OR ($dept_name == "administration")){?>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
                   <li><a href="../hr-module/hr-mod.php" class="btn btn-primary btn-xs">HR</a></li>
 				 <li><a href="../prod-module/prod-mod.php" class="btn btn-primary btn-xs">PRODUCTION</a></li>
                  <li><a href="../ops-module/operations-mod.php" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
@@ -71,64 +71,64 @@
 				 <li><a href="../admin-module/admin-mod.php" class="btn btn-primary btn-xs">ADMIN</a></li>
 			<?php }elseif($dept_name == "hr"){?>
 		    <!-- VISIBLE TO HR DEPARTMENT ONLY -->
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
                  <li><a href="../hr-module/hr-mod.php" class="btn btn-primary btn-xs">HR</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>SALES</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>ADMIN</a></li>				
+				 <li><a class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>				
 			<?php }elseif($dept_name == "production"){?>				
 				 <!-- VISIBLE TO PRODUCTION DEPARTMENT ONLY -->
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HR</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
 				 <li><a href="../prod-module/prod-mod.php" class="btn btn-primary btn-xs">PRODUCTION</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>SALES</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>ADMIN</a></li>				
+                 <li><a class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>				
 			<?php }elseif($dept_name == "accounting"){?>				
 				 <!-- VISIBLE TO ACCOUNTING DEPARTMENT ONLY -->
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HR</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
                  <li><a href="../ops-module/operations-mod.php" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>SALES</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>ADMIN</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>
 			<?php }elseif($dept_name == "finance"){?>
 				 <!-- VISIBLE TO FINANCE DEPARTMENT ONLY -->
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HR</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>SALES</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
 				 <li><a href="../finance-module/finance-mod.php" class="btn btn-primary btn-xs">FINANCE</a></li>
 				 <li><a type="button" class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>ADMIN</a></li>				
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>				
 			<?php }elseif($dept_name == "sales"){?>
 				 <!-- VISIBLE TO SALES DEPARTMENT ONLY -->
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HR</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
-                 <li><a type="button" class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
                  <li><a href="../sales-module/sales-mod.php" class="btn btn-primary btn-xs">SALES</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a type="button" class="btn btn-primary btn-xs" disabled>ADMIN</a></li>					
+				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>					
 			<?php } ?>
             </ul>
            </div>
@@ -151,7 +151,7 @@
 		        <!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
-           <div id="section_2">Report Problem</div>
+           <div id="section_2"><a id="repopro" href="#">Report Problem</a></div>
            <div id="section_3">
 		   		<form id="logout_form">
 					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
@@ -160,6 +160,10 @@
         </div>
 	</div>
 	<script> 
+	
+		$("#repopro").click(function(){
+			$("#form_wrapper").load("forms/problems/report_problem.php"); 
+		});	
 		
 		$("#logout_btn").click(function(){
             $.get("scripts/login.php", $("#logout_form").serialize(), function(response) {

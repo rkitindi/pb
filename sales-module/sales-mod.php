@@ -102,7 +102,7 @@
         <!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
-           <div id="section_2">Report Problem</div>
+           <div id="section_2"><a id="repopro" href="#">Report Problem</a></div>
            <div id="section_3">
 				<form id="logout_form">
 					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
@@ -135,6 +135,10 @@
 		$("#pay").click(function(){
             $("#mod_display").load("forms/payments/sales_payments_ops.html"); 
         });
+		
+		$("#repopro").click(function(){
+			$("#mod_display").load("forms/problems/report_problem.php"); 
+		});
 		
 		$("#logout_btn").click(function(){
 			$.get("scripts/logout.php", $("#logout_form").serialize(), function(response) {

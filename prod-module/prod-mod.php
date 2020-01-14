@@ -88,7 +88,7 @@
         </div>
         <!-- CONTENT AREA  -->
         <div id="content_area">
-             <div id="mod_title">Enterprise Resources Planning - PRODUCTIONS MODULE</div>
+             <div id="mod_title">PRINCESS BANANA ERP - PRODUCTIONS MODULE</div>
              <div id="mod_menu"> 
 			 PRODUCTIONS MENU
 				<div class="list-type1">
@@ -109,7 +109,7 @@
         <!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
-           <div id="section_2">Report Problem</div>
+           <div id="section_2"><a id="repopro" href="#">Report Problem</a></div>
            <div id="section_3">
 		   		<form id="logout_form">
 					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
@@ -147,6 +147,11 @@
                 $("#mod_display").load("forms/setup/prod_setup_ops.html"); 
             });
 			
+			$("#repopro").click(function(){
+				$("#mod_display").load("forms/problems/report_problem.php"); 
+			});
+				
+		
 			$("#logout_btn").click(function(){
 				$.get("scripts/logout.php", $("#logout_form").serialize(), function(response) {
 					$("#mod_display").html(response);

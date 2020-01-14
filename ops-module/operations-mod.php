@@ -73,8 +73,8 @@
 			 	 <!-- VISIBLE TO ACCOUNTING DEPARTMENT ONLY -->
                  <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
-				 <li><a href="#" class="btn btn-primary btn-xs">PRODUCTION</a></li>
-                 <li><a class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
+                 <li><a href="#" class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
                  <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
@@ -87,7 +87,7 @@
         </div>
         <!-- CONTENT AREA  -->
         <div id="content_area">
-             <div id="mod_title">Enterprise Resources Planning - ACCOUNTING MODULE</div>
+             <div id="mod_title">PRINCESS BANANA ERP - ACCOUNTING MODULE</div>
              <div id="mod_menu"> 
 			 ACCOUNTING MENU
 				<div class="list-type1">
@@ -106,7 +106,7 @@
         <!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
-           <div id="section_2">Report Problem</div>
+           <div id="section_2"><a id="repopro" href="#">Report Problem</a></div>
            <div id="section_3">
 				<form id="logout_form">
 					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
@@ -135,6 +135,10 @@
 			$("#bills").click(function(){
                 $("#mod_display").load("forms/bills/bills_operation-types.html"); 
             });
+			
+			$("#repopro").click(function(){
+				$("#mod_display").load("forms/problems/report_problem.php"); 
+			});
 			
 			$("#logout_btn").click(function(){
 				$.get("scripts/logout.php", $("#logout_form").serialize(), function(response) {
