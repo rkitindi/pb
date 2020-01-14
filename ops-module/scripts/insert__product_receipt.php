@@ -35,7 +35,7 @@ class prodreceiptActions{
 		if($pcode == "Please Select from List"){
 			echo "Select PRODUCT CODE from a list";  
             exit;			
-	    }elseif($cnum == "100.100"){
+	    }elseif($cnum == "10000000.10000000"){
 			echo "Select CONTROL NUMBER from the list";  
             exit;			
 	    }elseif($fname == "Please Select from List"){
@@ -60,7 +60,8 @@ class prodreceiptActions{
 			echo "THIS PRODUCT RECORD exists in database";
 			exit;
 		}else{
-			//$bid = $this->get_batch_id($cnum,$cynum);
+			
+			$darr = date('Y-m-d', strtotime($darr));
 			$this->insert_prodreceipt_details($pcode,$bid,$fname,$quantity,$cid,$darr);	
 			$receipt = $this->get_prodreceipt_number($pcode,$bid);
 			echo "PRODUCT:  ".$pcode." DETAILS added successfully, PRODUCT RECEIPT NUMBER IS:  ".$receipt;
@@ -140,7 +141,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	
 	if(trim($_POST['cnum'] ?? '') == "Please Select from List"){
 		
-		$cnum = "100.100";
+		$cnum = "10000000.10000000";
 		$pcode = trim($_POST['pcode'] ?? '');		
 		$fname = trim($_POST['fname'] ?? '');
 		$quantity = trim($_POST['quantity'] ?? '');

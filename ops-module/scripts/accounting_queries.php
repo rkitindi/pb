@@ -17,13 +17,109 @@ class queryACCOUNTING{
 		
 	function fetch_batchnumber_cycle_list(){
 		
-		$query = $this->link->prepare("select BatchDetails_ACC.ControlNumber, BatchDetails_ACC.RangeCycle, BatchDetails_ACC.ProductCount, (BatchDetails_ACC.ProductCount - COUNT(ReceiveProduct_ACC.ProductCode)) AS Remain FROM ReceiveProduct_ACC RIGHT JOIN BatchDetails_ACC ON BatchDetails_ACC.BatchId=ReceiveProduct_ACC.BatchId GROUP BY 1");
+		$query = $this->link->prepare("select BatchDetails_ACC.ControlNumber, BatchDetails_ACC.RangeCycle, BatchDetails_ACC.ProductCount, (BatchDetails_ACC.ProductCount - COUNT(ReceiveProduct_ACC.ProductCode)) AS Remain FROM ReceiveProduct_ACC RIGHT JOIN BatchDetails_ACC ON BatchDetails_ACC.BatchId=ReceiveProduct_ACC.BatchId GROUP BY 1 HAVING COUNT(ReceiveProduct_ACC.ProductCode) < BatchDetails_ACC.ProductCount ORDER BY ReceiveProduct_ACC.ProductCode ASC");
      	try{
 			$query->execute();
 			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
 		}catch (PDOException $e){die($e->getMessage());}
 		return $result;
 	}	
+	
+    function fetch_product_receiptnumber_list(){
+		
+		$query = $this->link->prepare("SELECT ReceiveProduct_ACC.ProductReceiptNumber, ReceiveProduct_ACC.ProductCode, BatchDetails_ACC.ControlNumber, (ReceiveProduct_ACC.Quantity - COALESCE(SUM(DispatchProduct_ACC.Quantity),0)) AS Stock FROM DispatchProduct_ACC RIGHT JOIN ReceiveProduct_ACC on DispatchProduct_ACC.ProductReceiptNumber = ReceiveProduct_ACC.ProductReceiptNumber JOIN BatchDetails_ACC ON ReceiveProduct_ACC.BatchId = BatchDetails_ACC.BatchId  GROUP BY 1 HAVING Stock > 0");
+     	try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}
+	
+	function fetch_pointofsale_list(){
+		$query = $this->link->prepare("SELECT  `pb_db`.`POSInfo_SAL`.POSId, `pb_db`.`POSInfo_SAL`.POSName FROM  `pb_db`.`POSInfo_SAL`");
+     	try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}
+	
+	function fetch_batchnumber_cycle_exp_list(){
+		
+		$query = $this->link->prepare("select ReceiveProduct_ACC.BatchId, BatchDetails_ACC.ControlNumber, BatchDetails_ACC.RangeCycle, BatchDetails_ACC.ProductCount, (BatchDetails_ACC.ProductCount - COUNT(ReceiveProduct_ACC.ProductCode)) AS Remain FROM ReceiveProduct_ACC RIGHT JOIN BatchDetails_ACC ON BatchDetails_ACC.BatchId=ReceiveProduct_ACC.BatchId GROUP BY 1 HAVING ReceiveProduct_ACC.BatchId NOT IN (SELECT  BatchId FROM  `pb_db`.`BatchExp_ACC`)");
+     	try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+		}catch (PDOException $e){die($e->getMessage());}
+		return $result;
+	}	
+	
+	function fetch_MOTD(){
+		$query = $this->link->prepare("SELECT Message FROM `pb_db`.`MOTD_ADM` ORDER BY MessageID DESC LIMIT 1");
+     	try{
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($result as $key => $item){ 
+				$msg = $item['Message'];									  
+			}
+		}catch (PDOException $e){die($e->getMessage());}
+		return $msg;
+	}
+	
+	function fetch_role_name($r_id){
+		$query = $this->link->prepare("select RoleName from `pb_db`.`UserRole_ADM` where RoleID = ?");
+     	try{
+			$values = array($r_id);
+			$query->execute($values);
+			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($results as $key => $item){ 
+				$rname = $item['RoleName'];	
+				return $rname;				
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		
+	}
+	
+    function fetch_user_dept($e_id){
+		$query = $this->link->prepare("SELECT Department_HR.DepartmentName AS D_NAME FROM `pb_db`.`Department_HR` JOIN `pb_db`.`PersonalInfo_HR` ON `pb_db`.`PersonalInfo_HR`.DepartmentId = `pb_db`.`Department_HR`.DepartmentId  WHERE `pb_db`.`PersonalInfo_HR`.EmployeeId = ?");
+     	try{
+			$values = array($e_id);
+			$query->execute($values);
+			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($results as $key => $item){ 
+				$dname = $item['D_NAME'];	
+				return $dname;				
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		
+	}	
+
+	function fetch_user_permission($r_id){
+		// set array
+		$perm_list = array();
+		$query = $this->link->prepare("select `Role_Perm_ADM`.PermissionName AS PERM FROM `pb_db`.`Role_Perm_ADM` JOIN `pb_db`.`UserRole_ADM` ON `pb_db`.`UserRole_ADM`.RoleName = `pb_db`.`Role_Perm_ADM`.RoleName WHERE `pb_db`.`UserRole_ADM`.RoleID = ?");
+     	try{
+			$values = array($r_id);
+			$query->execute($values);
+			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($results as $key => $item){ 
+				$perm_list[] = $item['PERM'];	
+				return $perm_list;
+			}			
+		}catch (PDOException $e){die($e->getMessage());}
+		
+	}
+
+
+
+	
+
+
+
+
+
+	
+	
 	
 	function get_product_dispatched_count(){
 		
@@ -50,15 +146,6 @@ class queryACCOUNTING{
 		}catch (PDOException $e){die($e->getMessage());}
 		return $a;
 	} 
-
-	function fetch_expensetype_list(){
-		$query = $this->link->prepare("SELECT  ExpTypeId, ExpenseType FROM  `ExpenseType_PROD`");
-     	try{
-			$query->execute();
-			$result = $query->fetchAll(PDO::FETCH_ASSOC);	
-		}catch (PDOException $e){die($e->getMessage());}
-		return $result;
-	}	
 	
 	function fetch_banana_farmer_supplier_list(){
 		$query = $this->link->prepare("SELECT SupplierId, BusinessName FROM  `SupplierInfo_PROD` WHERE CategoryId = 3");

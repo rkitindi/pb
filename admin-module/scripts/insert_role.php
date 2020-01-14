@@ -34,13 +34,36 @@ class roleActions{
 			echo "ROLE exists in database";
 			exit;
 		}else{
-			$totalPerm = $this->calculate_perms($default,$insert,$update,$delete,$view); 
-			$this->insert_role($rname,$rdesc,$totalPerm);	
+			
+			$this->insert_role($rname,$rdesc);
+			
+            if(!empty($default)){
+				$this->insert_role_perm_1($rname,$default);
+			}
+			
+			if(!empty($insert)){				
+				$this->insert_role_perm_2($rname,$insert);				
+			}
+			
+			if(!empty($update)){
+				$this->insert_role_perm_3($rname,$update);				
+			}
+			
+			if(!empty($delete)){
+				$this->insert_role_perm_4($rname,$delete);
+			}
+			
+			if(!empty($view)){
+				$this->insert_role_perm_5($rname,$view);
+			}
+			
+			echo "Role ".$rname." Inserted Successfully!";
+			
 		}	
 	}
 	
 	
-// This function checks if ROLE exist in database
+	// This function checks if ROLE exist in database
 	function check_role_exist($rname){
 		$query = $this->link->prepare("SELECT * FROM `userrole_adm` WHERE RoleName = ?");
      	$values = array($rname);
@@ -49,29 +72,50 @@ class roleActions{
 		return $counts; 
 	}	
 	
-// This function calculates sum of permissions
-	function calculate_perms($default,$insert,$update,$delete,$view){
-		$query = $this->link->prepare("SELECT SUM(PermissionID) FROM `UserPermission_ADM` WHERE PermissionName = ? OR PermissionName = ? OR PermissionName = ? OR PermissionName = ? OR PermissionName = ?");
-     	$values = array($default,$insert,$update,$delete,$view);
-		try{
-			$query->execute($values);
-			$result = $query->fetchAll(PDO::FETCH_NUM);
-			foreach($result as $val){
-				foreach($val as $value){
-					$totalPerm = $value[0];
-				}					
-			}						
-		}catch (PDOException $e){die($e->getMessage());}
-		return $totalPerm;
-	}
 	
-// Insert Function
-    function insert_role($rname,$rdesc,$totalPerm){
-		$query = $this->link->prepare("INSERT INTO `UserRole_ADM` (RoleName, RoleDescription, PermissionID) VALUES (?,?,?)");
-		$values = array($rname,$rdesc,$totalPerm);
-		$query->execute($values);
-		echo "MOTD added successfully";		
+   // Insert Role Function
+    function insert_role($rname,$rdesc){
+		$query = $this->link->prepare("INSERT INTO `UserRole_ADM` (RoleName, RoleDescription) VALUES (?,?)");
+		$values = array($rname,$rdesc);
+		$query->execute($values);		
     }	
+	
+	// Insert Role_Perm Function
+    function insert_role_perm_1($rname,$default){
+		$query = $this->link->prepare("INSERT INTO `Role_Perm_ADM` (RoleName, PermissionName) VALUES (?,?)");
+		$values = array($rname,$default);
+		$query->execute($values);		
+    }
+	
+	// Insert Role_Perm Function
+    function insert_role_perm_2($rname,$insert){
+		$query = $this->link->prepare("INSERT INTO `Role_Perm_ADM` (RoleName, PermissionName) VALUES (?,?)");
+		$values = array($rname,$insert);
+		$query->execute($values);		
+    }
+	
+	// Insert Role_Perm Function
+    function insert_role_perm_3($rname,$update){
+		$query = $this->link->prepare("INSERT INTO `Role_Perm_ADM` (RoleName, PermissionName) VALUES (?,?)");
+		$values = array($rname,$update);
+		$query->execute($values);	
+
+		
+    }	
+	
+	// Insert Role_Perm Function
+    function insert_role_perm_4($rname,$delete){
+		$query = $this->link->prepare("INSERT INTO `Role_Perm_ADM` (RoleName, PermissionName) VALUES (?,?)");
+		$values = array($rname,$delete);
+		$query->execute($values);		
+    }
+	
+	// Insert Role_Perm Function
+    function insert_role_perm_5($rname,$view){
+		$query = $this->link->prepare("INSERT INTO `Role_Perm_ADM` (RoleName, PermissionName) VALUES (?,?)");
+		$values = array($rname,$view);
+		$query->execute($values);		
+    }
 	
 }
 

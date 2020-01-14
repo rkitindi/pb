@@ -96,8 +96,8 @@ class batchdetailActions{
 			$R_ID = $this->get_batchrange_id($cnum,$cnum1);	
 			$rangeID = $this->get_latest_batchrange_id($R_ID);	
 			$cycle = $this->get_latest_cycle($rangeID);	
-			//$range = $this->get_range($rangeID);	
-			$range = 2;
+			$range = $this->get_range($rangeID);	
+			//$range = 2;
 			$dor = DateTime::createFromFormat('Y-m-d', $darr);
 			$ArriveYear = $dor->format('Y');
 			$CNUM_exists = $this->check_CNUM_exist($cnum,$rangeID,$cycle);
@@ -222,8 +222,8 @@ class batchdetailActions{
 			$R_ID = $this->get_batchrange_id($cnum,$cnum1);	
 			$rangeID = $this->get_latest_batchrange_id($R_ID);	
 			$cycle = $this->get_latest_cycle($rangeID);	
-			//$range = $this->get_range($rangeID);	
-			$range = 2;
+			$range = $this->get_range($rangeID);	
+			//$range = 2;
 			$dor = DateTime::createFromFormat('Y-m-d', $darr);
 			$ArriveYear = $dor->format('Y');
 			$CNUM_exists = $this->check_CNUM_exist($cnum,$rangeID,$cycle);

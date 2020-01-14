@@ -1,0 +1,52 @@
+<?php
+
+	//Start Session
+	session_start();
+	
+	if(!isset($_SESSION)){
+		
+		// Redirect user to index page	
+		echo "<script> location.href='../../frontend/index.html'; </script>";
+		exit;
+		
+	}
+	
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="RECEIVE PRODUCT" id="recv"><br>
+					<input type="button" value="SALE PRODUCT" id="sale"><br>	
+					<input type="button" value="DEFFECTIVES" id="deff"><br>									
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#recv").click(function(){
+                $("#mod_display").load("forms/products/receive_prod_ops.php"); 
+            });
+			$("#sale").click(function(){
+                $("#mod_display").load("forms/products/sale_prod_ops.php"); 
+            });
+			$("#deff").click(function(){
+                $("#mod_display").load("forms/products/deffective/deff_prod_ops.html"); 
+            });
+			$("#salesp").click(function(){
+                $("#mod_display").load("forms/products/sales_payments_ops.html"); 
+            });
+		</script>
+</body>
+</html>

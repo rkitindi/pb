@@ -1,3 +1,14 @@
+
+<?php
+	// Include setup.php file
+	include "scripts/admin_queries.php";
+	
+	// read the product categories from the database
+	$message = new queryADMIN();
+	$motd = $message->fetch_MOTD();
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,7 +55,7 @@
 				</div>
 			 </div>
 			 <div id="mod_display"> ADMIN CONTENT GOES HERE</div>
-			 <div id="sitemessages"><marquee behavior="scroll" direction="left">Checkout slide-in text here</marquee></div>
+			 <div id="sitemessages"><marquee behavior="scroll" direction="left"><?php echo $motd; ?></marquee></div>
         </div>
         <!-- FOOTER -->
         <div id="footer">

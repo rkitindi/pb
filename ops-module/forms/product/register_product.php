@@ -42,7 +42,7 @@
 						<option selected>Please Select from List</option>
 							<?php foreach ($controlnumber as $key => $item): ?> 
 								<?php $cnum = $item['ControlNumber']; $cyc = $item['RangeCycle']; $pc = $item['ProductCount']; $rmng = $item['Remain'];   ?>	 
-								<option value="<?php echo $cnum; ?>.<?php echo $cyc; ?>">CONTROL#: <?php echo $cnum; ?> | PRODUCT COUNT: <?php echo $pc; ?> | REMAINING: <?php echo $rmng; ?></option>		  
+								<option value="<?php echo $cnum; ?>.<?php echo $cyc; ?>">CONTROL#: <?php echo $cnum; ?> | PRODUCT COUNT: <?php echo $pc; ?> | STOCK: <?php echo $rmng; ?> PRODUCTS</option>		  
 							<?php endforeach; ?>
 					</select><br>
 					<label for="fname">Farm Name:</label><br>

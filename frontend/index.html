@@ -1,21 +1,9 @@
-<?php
-
-
-
-
-
-
-
-
-
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
         <title>PRINCESS BANANA ERP</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet"  type="text/css" href="style.css">
     </head>
     <body>
@@ -28,15 +16,15 @@
            <div id="navbar">
              <ul>
                  <li><a href="#">HOME</a></li>
-                  <li><a href="../hr-module/hr-mod.html">HR</a></li>
-				 <li><a href="../prod-module/prod-mod.html">PRODUCTION</a></li>
-                 <li><a href="../ops-module/operations-mod.html">ACCOUNTING</a></li>
-                 <li><a href="../sales-module/sales-mod.php">SALES</a></li>
-				 <li><a href="../finance-module/finance-mod.php">FINANCE</a></li>
-				 <li><a href="../mgmnt-module/mgmnt-mod.php">MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a href="../admin-module/admin-mod.php">ADMIN</a></li>
+                 <li><a href="../hr-module/hr-mod.php" disabled="true" onclick="return false">HR</a></li>
+				 <li><a href="../prod-module/prod-mod.php" disabled="true" onclick="return false">PRODUCTION</a></li>
+                 <li><a href="../ops-module/operations-mod.php" disabled="true" onclick="return false">ACCOUNTING</a></li>
+                 <li><a href="../sales-module/sales-mod.php" disabled="true" onclick="return false">SALES</a></li>
+				 <li><a href="../finance-module/finance-mod.php" disabled="true" onclick="return false">FINANCE</a></li>
+				 <li><a href="../mgmnt-module/mgmnt-mod.php" disabled="true" onclick="return false">MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" disabled="true" onclick="return false">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" disabled="true" onclick="return false">TRENDS</a></li>
+				 <li><a href="../admin-module/admin-mod.php" disabled="true" onclick="return false">ADMIN</a></li>
              </ul>
            </div>
         </div>
@@ -45,16 +33,16 @@
             <div id="login_0">PLEASE LOGIN INTO THE SYSTEM TO START OPERATIONS</div>
 			<div id="login_1">
 				<div id="form_wrapper">
-					<div id="form_section1">TYPE USERNAME AND PASSWORD THEN CLICK LOGIN</div>
-					<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
+					<div id="form_section1">SUPPLY YOUR LOGIN CREDENTIALS BELOW</div>
+					<form id="login_form">
 						<div id="form_section2">				
 							<label for="uname">Username:</label><br>
-							<input type="text" id="uname" name="username" required placeholder="Type User Name"><br>
+							<input type="text" id="uname" name="uname" required placeholder="Type User Name"><br>
 							<label for="password">Password:</label><br>
 							<input type="password" id="password" name="password" required placeholder="Type your password"><br>		
 						</div>
 						<div id="form_bottons">
-							<div id="submit"><input type="submit" name="insert" value="LOGIN"></div>
+							<div id="submit"><input type="submit" id="login_btn" name="login" value="LOGIN"></div>
 							<div id="reset"><input type="reset" value="RESET" /></div>
 						</div>
 					</form>
@@ -62,13 +50,36 @@
 			</div>
 			<div id="sitemessages"><marquee behavior="scroll" direction="left">WORK SMART DONT WORK HARD!!!</marquee></div>
 		</div>
-        <!-- FOOTER -->
+		<!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
            <div id="section_2">Report Problem</div>
-           <div id="section_3">Logout</div>
+           <div id="section_3">
+		   		<form id="logout_form">
+					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
+				</form>			
+		   </div>
         </div>
 	</div>
+	<script> 
+	
+        $("#login_btn").click(function(){
+            $.post("scripts/login.php", $("#login_form").serialize(), function(response) {
+				$("#form_wrapper").html(response);
+			});
+			return false;
+        });
+		
+		$("#logout_btn").click(function(){
+            $.get("scripts/login.php", $("#logout_form").serialize(), function(response) {
+				$("#form_wrapper").html(response);
+			});
+			return false;
+        });
+			
+	</script>
+	
+	
    </body>
 </html>
 

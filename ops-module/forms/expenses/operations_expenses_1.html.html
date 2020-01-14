@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_role.php" method="expensest">
+				<div id="form_section2">	
+					<input type="button" value="BATCH EXPENSES" id="bexpenses"><br>
+					<input type="button" value="PHONE BILL" id="pb"><br>	
+					<input type="button" value="WATER BILL" id="wb"><br>		
+					<input type="button" value="ELECTRICITY BILL" id="eb"><br>						
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#bexpenses").click(function(){
+                $("#mod_display").load("forms/expenses/batch_expenses.html"); 
+            });
+			$("#pb").click(function(){
+                $("#mod_display").load("forms/expenses/phone_bill_ops.html"); 
+            });
+			$("#wb").click(function(){
+                $("#mod_display").load("forms/expenses/water_bill_ops.html"); 
+            });
+			$("#eb").click(function(){
+                $("#mod_display").load("forms/expenses/elect_bill_ops.html"); 
+            });
+		</script>
+</body>
+</html>

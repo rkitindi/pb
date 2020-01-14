@@ -1,3 +1,14 @@
+<?php
+	// Include setup.php file
+	include "../../scripts/admin_queries.php";
+	
+	// read the product categories from the database
+	$employees_list = new querySALES();
+	$role_list = new querySALES();
+	$results = $employees_list->fetch_employee_list();
+    $roles = $role_list->fetch_role_list();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

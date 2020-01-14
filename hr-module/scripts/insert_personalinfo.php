@@ -31,6 +31,8 @@ class employeedetailActions{
 
 	function validate_employee_details($eid,$fname,$lname,$sdate,$deptname,$tittle,$gender,$dob,$etype){
 		
+		$today = date("Y-m-d");
+		
 		if(empty($eid)){
 			echo "EMPLOYEE ID cannot be empty";  
             exit;			
@@ -46,6 +48,9 @@ class employeedetailActions{
 	    }elseif(empty($sdate)){
 			echo "Please enter a START DATE";
 			exit;
+		}elseif($sdate > $today ){			
+			echo "Start DATE cannot be later than TODAY";
+			exit;			
 		}elseif($deptname == "Please Select from List"){
 			echo "Please select DEPARTMENT NAME from the list";	
 			exit;
@@ -64,6 +69,9 @@ class employeedetailActions{
 		}elseif($this->check_age($dob) > 60){
 			echo "Employee is too old";
 			exit;
+		}elseif($dob > $today ){			
+			echo "Date of Birth cannot be later than TODAY";
+			exit;			
 		}elseif($etype == "Please Select from List"){
 			echo "EMPLOYMENT TYPE CANNOT ME EMPTY";
 			exit;
@@ -71,7 +79,6 @@ class employeedetailActions{
 			$this->insert_employee_details($eid,$fname,$lname,$sdate,$deptname,$tittle,$gender,$dob,$etype);	
 			echo "Employee: ".$fname." ".$lname." "."was added successfully "."Employee ID is: ".$eid;
 		}
-
 
 	}
 

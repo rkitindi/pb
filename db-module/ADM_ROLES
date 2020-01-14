@@ -1,0 +1,37 @@
+
+
+-- -----------------------------------------------------
+-- TURN OFF FK CHECK
+-- -----------------------------------------------------
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`UserRole_ADM`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`UserRole_ADM` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`UserRole_ADM` (
+ `RoleID` INT NOT NULL AUTO_INCREMENT,
+ `RoleName` VARCHAR(255) NOT NULL,
+ `RoleDescription` VARCHAR(255),
+ `PermissionID` INT NOT NULL,
+ PRIMARY KEY (`RoleID`),
+ INDEX `PermissionID_idx` (`PermissionID` ASC), 
+ CONSTRAINT `PermissionID_URS`
+ FOREIGN KEY (`PermissionID`)
+ REFERENCES `pb_db`.`UserPermission_ADM` (`PermissionID`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
+ 
+ -- -----------------------------------------------------
+-- Table `pb_db`.`UserRole_ADM`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`UserRole_ADM` ;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`UserRole_ADM` (
+ `RoleID` INT NOT NULL AUTO_INCREMENT,
+ `RoleName` VARCHAR(255) NOT NULL,
+ `RoleDescription` VARCHAR(255),
+ PRIMARY KEY (`RoleID`));

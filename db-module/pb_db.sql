@@ -364,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`CaseDetails_PROD` (
 DROP TABLE IF EXISTS `pb_db`.`POSInfo_SAL` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`POSInfo_SAL` (
- `POSId` INT NOT NULL AUTO_INCREMENT,
+ `POSId` INT NOT NULL,
  `POSName` VARCHAR(255) NOT NULL,
  `EmployeeID` VARCHAR(255),
  PRIMARY KEY (`POSId`),
@@ -481,7 +481,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`DispatchProduct_ACC` (
  `POSId` INT NOT NULL,
  `Quantity` INT NOT NULL,
  `DateDispatched` DATETIME NOT NULL,
- `Dispatched` INT NOT NULL,
+ `Dispatched` VARCHAR(1) NOT NULL,
  `Comments` VARCHAR(255),
  PRIMARY KEY (`DispatchRefNum`), 
  INDEX `ProductReceiptNumber_idx` (`ProductReceiptNumber` ASC), 
@@ -558,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`ProductReceived_SAL` (
  `DispatchRefNum` INT NOT NULL,
  `Quantity` INT NOT NULL,
  `DateReceived` DATETIME NOT NULL,
- `Received` INT NOT NULL,
+ `Received` VARCHAR(1) NOT NULL,
  `Comments` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`ProductReceiptId`), 
  INDEX `DispatchRefNum_idx` (`DispatchRefNum` ASC), 
@@ -581,6 +581,7 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`SaleProductReceived_SAL` (
  `SalesDate` DATETIME NOT NULL,
  `PaymentMethod` VARCHAR(255) NOT NULL,
  `CustomerID` VARCHAR(255),
+ `RecordInsertDate` DATETIME NOT NULL,
  PRIMARY KEY (`SalesRef`), 
  INDEX `ProductReceiptId_idx` (`ProductReceiptId` ASC), 
  INDEX `CustomerID_idx` (`CustomerID` ASC),
@@ -631,8 +632,10 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`CollectPayment_SAL` (
  `SalesRef` INT NOT NULL,
  `Amount` INT NOT NULL,
  `PaymentMethod` VARCHAR(255) NOT NULL,
- `Attachment` BLOB,
- `Confirmation` INT NOT NULL,
+ `PaymentDate` DATETIME NOT NULL,
+ `Attachment` VARCHAR(255),
+ `Confirmation` VARCHAR(1) NOT NULL,
+ `Comments` VARCHAR(255),
  PRIMARY KEY (`PaymentRef`),
  INDEX `SalesRef_idx` (`SalesRef` ASC), 
  CONSTRAINT `SalesRef_CP`
@@ -641,16 +644,18 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`CollectPayment_SAL` (
  ON DELETE CASCADE
  ON UPDATE CASCADE);
 
--- -----------------------------------------------------
+-- --------------------------------------------------------------
 -- Table `pb_db`.`RegisterDeffectiveProd_SAL`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `pb_db`.`RegisterDeffectiveProd_SAL` ;
+-- --------------------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`RegisterDeffectiveProd_SAL`;
 
-CREATE TABLE IF NOT EXISTS `pb_db`.`RegisterDeffectiveProd_SAL` (
+CREATE TABLE IF NOT EXISTS `pb_db`.`RegisterDeffectiveProd_SAL`(
  `DeffectiveRef` INT NOT NULL AUTO_INCREMENT,
  `ProductReceiptId` INT NOT NULL,
  `Quantity` INT NOT NULL,
- `Confirmation` INT NOT NULL,
+ `Confirmation` VARCHAR(1) NOT NULL,
+ `DateReported` DATETIME NOT NULL,
+ `Comments` VARCHAR(255) NOT NULL,
  PRIMARY KEY (`DeffectiveRef`),
  INDEX `ProductReceiptId_idx` (`ProductReceiptId` ASC), 
  CONSTRAINT `ProductReceiptId_RDP`
@@ -662,13 +667,13 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`RegisterDeffectiveProd_SAL` (
 
 
 
--- -----------------------------------------------------
+-- -------------------------------------------------------------
 -- ADMIN MODULE
--- -----------------------------------------------------
+-- -------------------------------------------------------------
 
--- -----------------------------------------------------
+-- -------------------------------------------------------------
 -- Table `pb_db`.`UserPermission_ADM`
--- -----------------------------------------------------
+-- -------------------------------------------------------------
 DROP TABLE IF EXISTS `pb_db`.`UserPermission_ADM` ;
 
 CREATE TABLE IF NOT EXISTS `pb_db`.`UserPermission_ADM` (
@@ -686,15 +691,18 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`UserRole_ADM` (
  `RoleID` INT NOT NULL AUTO_INCREMENT,
  `RoleName` VARCHAR(255) NOT NULL,
  `RoleDescription` VARCHAR(255),
- `PermissionID` INT NOT NULL,
- PRIMARY KEY (`RoleID`),
- INDEX `PermissionID_idx` (`PermissionID` ASC), 
- CONSTRAINT `PermissionID_URS`
- FOREIGN KEY (`PermissionID`)
- REFERENCES `pb_db`.`UserPermission_ADM` (`PermissionID`)
- ON DELETE CASCADE
- ON UPDATE CASCADE);
+ PRIMARY KEY (`RoleID`));
+ 
+-- -----------------------------------------------------
+-- Table `pb_db`.`Role_Perm_ADM`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`Role_Perm_ADM`;
 
+CREATE TABLE IF NOT EXISTS `pb_db`.`Role_Perm_ADM` (
+ `ID` INT NOT NULL AUTO_INCREMENT,
+ `RoleName` VARCHAR(255) NOT NULL,
+ `PermissionName` VARCHAR(255),
+ PRIMARY KEY (`ID`));
 
 -- -----------------------------------------------------
 -- Table `pb_db`.`UserDetails_ADM`
@@ -733,9 +741,83 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`MOTD_ADM` (
  PRIMARY KEY (`MessageID`));
 
 
+-- -----------------------------------------------------
+-- Table `pb_db`.`REPORTPROBLEMS_ADM`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`REPORTPROBLEMS_ADM`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`REPORTPROBLEMS_ADM`(
+ `ProblemID` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeID` VARCHAR(255) NOT NULL,
+ `ProblemDesc` VARCHAR(255) NOT NULL,
+ `DateOccured` DATE NOT NULL,
+ PRIMARY KEY (`ProblemID`),
+ INDEX `EmployeeID_idx` (`EmployeeID` ASC),
+ CONSTRAINT `EmployeeID_RPA`
+ FOREIGN KEY (`EmployeeID`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeID`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 
+
+-- -----------------------------------------------------
+-- AUDIT TRAIL MODULE
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`LOGIN_TBL_AT`, REPORT LOGIN DATE & TIME
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`LOGIN_TBL_ADM`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`LOGIN_TBL_ADM` (
+ `TransactionID` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeID` VARCHAR(255) NOT NULL,
+ `LoginDate` DATETIME NOT NULL,
+ PRIMARY KEY (`TransactionID`),
+ INDEX `EmployeeID_idx` (`EmployeeID` ASC), 
+ CONSTRAINT `EmployeeID_LT`
+ FOREIGN KEY (`EmployeeID`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeID`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`LOGOUT_TBL_AT`, REPORT LOGOUT DATE & TIME
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`LOGOUT_TBL_AT`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`LOGOUT_TBL_AT` (
+ `TransactionID` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeID` VARCHAR(255) NOT NULL,
+ `LogoutDate` DATETIME NOT NULL,
+ PRIMARY KEY (`TransactionID`),
+ INDEX `EmployeeID_idx` (`EmployeeID` ASC), 
+ CONSTRAINT `EmployeeID_LTA`
+ FOREIGN KEY (`EmployeeID`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeID`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
+ 
+-- -----------------------------------------------------
+-- Table `pb_db`.`ACTION_TBL_AT`, REPORT ACTION TAKEN ON A FORM
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`ACTION_TBL_AT`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`ACTION_TBL_AT` (
+ `TransactionID` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeID` VARCHAR(255) NOT NULL,
+ `FormName` VARCHAR(255) NOT NULL,
+ `ActionTaken` VARCHAR(255) NOT NULL,
+ `AccessDate` DATETIME NOT NULL,
+ PRIMARY KEY (`TransactionID`),
+ INDEX `EmployeeID_idx` (`EmployeeID` ASC), 
+ CONSTRAINT `EmployeeID_ATA`
+ FOREIGN KEY (`EmployeeID`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeID`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
 
 
 

@@ -36,10 +36,11 @@
 			 SALES MENU
 			 <div class="list-type1">
 					<ol>
-						<li><a id="pos" href="#">POS</a></li>
-						<li><a id="cust" href="#">Customers</a></li>
 						<li><a id="prod" href="#">Products</a></li>
+						<li><a id="exp" href="#">Expenses</a></li>
+						<li><a id="pay" href="#">Payments</a></li>
 						<li><a id="receipt" href="#">Receipts</a></li>
+						<li><a id="set" href="#">Setup</a></li>
 					</ol>
 				</div> 
 			 </div>
@@ -57,14 +58,20 @@
             $("#pos").click(function(){
                 $("#mod_display").load("forms/pos/pos_operations.html"); 
             });
-			$("#cust").click(function(){
-                $("#mod_display").load("forms/customer/customer_operations.html"); 
+			$("#exp").click(function(){
+                $("#mod_display").load("forms/expenses/pos_expense_details_ops.html"); 
+            });
+			$("#set").click(function(){
+                $("#mod_display").load("forms/setup/setup_operations.html"); 
             });
 			$("#prod").click(function(){
                 $("#mod_display").load("forms/products/product_operations-types.html"); 
             });
 			$("#receipt").click(function(){
                 $("#mod_display").load("forms/receipt/report_ops.html"); 
+            });
+			$("#pay").click(function(){
+                $("#mod_display").load("forms/payments/sales_payments_ops.html"); 
             });
      </script>
 	</body>

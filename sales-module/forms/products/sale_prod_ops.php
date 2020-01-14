@@ -1,0 +1,50 @@
+<?php
+
+	//Start Session
+	session_start();
+	
+	if(!isset($_SESSION)){
+		
+		// Redirect user to index page	
+		echo "<script> location.href='../../frontend/index.html'; </script>";
+		exit;
+		
+	}
+	
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Role</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet"  type="text/css" href="../frontend/style.css">
+</head>
+<body>
+	<div id="form_wrapper">
+			<div id="form_section1">CLICK APPROPIATE BUTTON TO PROCEED</div>
+			<form action="update_role.php" method="post">
+				<div id="form_section2">	
+					<input type="button" value="SALE PRODUCT" id="sale"><br>
+					<input type="button" value="UPDATE SALE" id="usale"><br>	
+	                <input type="button" value="DELETE SALE" id="dsale"><br>					
+				</div>
+				<div id="form_bottons"></div>
+			</form>
+	</div>
+		<script type="text/javascript"> 
+            $("#sale").click(function(){
+                $("#mod_display").load("forms/products/sale_product.php"); 
+            });
+			$("#usale").click(function(){
+                $("#mod_display").load("forms/products/search_sold.php"); 
+            });
+			$("#dsale").click(function(){
+                $("#mod_display").load("forms/products/del_search_sold.php"); 
+            });
+		</script>
+</body>
+</html>

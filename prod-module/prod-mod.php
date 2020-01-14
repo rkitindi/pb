@@ -1,10 +1,51 @@
+<?php
+
+	//Start Session
+	session_start();
+	
+	
+	// Include Queries
+	include "scripts/production_setup.php";
+		
+
+	
+	if(!isset($_SESSION)){
+		
+		// Redirect user to index page	
+		echo "<script> location.href='index.html'; </script>";
+		exit;
+		
+	}else{
+	
+		// Get Session Details
+		$e_id = $_SESSION['EmployeeID'];
+		$r_id = $_SESSION['RoleID'];
+	
+	
+		// Create Objects
+		$motd_list = new setupPRODUCTION();	
+		$user_role = new setupPRODUCTION();
+		$user_dept = new setupPRODUCTION();
+		$user_permissions = new setupPRODUCTION();
+	
+		// Query Data from Database
+		$motd = $motd_list->fetch_MOTD();
+		$role_name = $user_role->fetch_role_name($r_id);
+		$dept_name = $user_dept->fetch_user_dept($e_id);
+		$perm_list = $user_permissions->fetch_user_permission($r_id);
+		
+	}
+	
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>PRINCESS BANANA ERP</title>
+        <title>PRODUCTION MODULE</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet"  type="text/css" href="../frontend/style.css">
     </head>
     <body>
@@ -15,18 +56,34 @@
            <div id="logo">PRINCESS BANANA</div>
            <div id="top_info">ENTERPRISE RESOURCE PLANNING SYSTEM</div>
            <div id="navbar">
-             <ul>
-                 <li><a href="../frontend/index.html">HOME</a></li>
-				 <li><a href="../hr-module/hr-mod.html">HR</a></li>
-				 <li><a href="#">PRODUCTION</a></li>
-                 <li><a href="../ops-module/operations-mod.php">ACCOUNTING</a></li>
-                 <li><a href="../sales-module/sales-mod.php">SALES</a></li>
-				 <li><a href="../finance-module/finance-mod.php">FINANCE</a></li>
-				 <li><a href="../mgmnt-module/mgmnt-mod.php">MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a href="../admin-module/admin-mod.php">ADMIN</a></li>
-             </ul>
+            <ul>
+			<?php
+				//Visible to Admin only
+				if( ($role_name == "admin") OR ($dept_name == "administration")){?>
+                 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+				 <li><a href="../hr-module/hr-mod.html" class="btn btn-primary btn-xs">HR</a></li>
+				 <li><a href="#" class="btn btn-primary btn-xs">PRODUCTION</a></li>
+                 <li><a href="../ops-module/operations-mod.php" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
+                 <li><a href="../sales-module/sales-mod.php" class="btn btn-primary btn-xs">SALES</a></li>
+				 <li><a href="../finance-module/finance-mod.php" class="btn btn-primary btn-xs">FINANCE</a></li>
+				 <li><a href="../mgmnt-module/mgmnt-mod.php" class="btn btn-primary btn-xs">MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a href="../admin-module/admin-mod.php" class="btn btn-primary btn-xs">ADMIN</a></li>
+			<?php }else{ ?>
+				 <!-- VISIBLE TO PRODUCTION DEPARTMENT ONLY -->
+                 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
+				 <li><a href="#" class="btn btn-primary btn-xs">PRODUCTION</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+                 <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a class="btn btn-primary btn-xs" disabled>ADMIN</a></li>			
+			<?php } ?>
+            </ul>
            </div>
         </div>
         <!-- CONTENT AREA  -->
@@ -42,38 +99,61 @@
 						<li><a id="product" href="#">Products</a></li>
 						<li><a id="inventory" href="#">Inventory</a></li>
 						<li><a id="expenses" href="#">Expenses</a></li>
+						<li><a id="setup" href="#">Setup</a></li>
 					</ol>
 				</div> 
 			 </div>
 			 <div id="mod_display">PRODUCTION CONTENT GOES HERE</div>
-			 <div id="sitemessages"><marquee behavior="scroll" direction="left">Checkout slide-in text here</marquee></div>
+			 <div id="sitemessages"><marquee behavior="scroll" direction="left"><?php echo $motd; ?></marquee></div>
         </div>
         <!-- FOOTER -->
         <div id="footer">
            <div id="section_1">Developed by: Enafritech <br> www.enafritech.com</div>
            <div id="section_2">Report Problem</div>
-           <div id="section_3">Logout</div>
+           <div id="section_3">
+		   		<form id="logout_form">
+					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
+				</form>	
+		   </div>
         </div>
 	</div>
-	<script type="text/javascript"> 
+	<script> 
+	
             $("#farm").click(function(){
-                $("#mod_display").load("forms/farm/farm_operations.php"); 
+                $("#mod_display").load("forms/farm/farm_operations.html"); 
             });
+			
 			$("#product").click(function(){
                 $("#mod_display").load("forms/product/product_operations-types.html"); 
             });
+			
 			$("#expenses").click(function(){
-                $("#mod_display").load("forms/expenses/expenses_operations.php"); 
+                $("#mod_display").load("forms/expenses/expenses_operations.html"); 
             });
+			
 			$("#inventory").click(function(){
-                $("#mod_display").load("forms/inventory/inventory_operations.php"); 
+                $("#mod_display").load("forms/inventory/inventory_operations.html"); 
             });
+			
 			$("#trucks").click(function(){
-                $("#mod_display").load("forms/truck/truck_operations.php"); 
+                $("#mod_display").load("forms/truck/truck_operations.html"); 
             });
+			
 			$("#supp").click(function(){
-                $("#mod_display").load("forms/supplier/supplier_operation-types.php"); 
+                $("#mod_display").load("forms/supplier/supplier_details_ops.html"); 
             });
+			
+			$("#setup").click(function(){
+                $("#mod_display").load("forms/setup/prod_setup_ops.html"); 
+            });
+			
+			$("#logout_btn").click(function(){
+				$.get("scripts/logout.php", $("#logout_form").serialize(), function(response) {
+					$("#mod_display").html(response);
+				});
+			return false;
+			});
+			
      </script>
 	</body>
 </html>
