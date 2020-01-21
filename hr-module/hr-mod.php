@@ -25,13 +25,13 @@
 		// Create Objects
 		$motd_list = new setupHR();	
 		$user_role = new setupHR();
-		$user_dept = new setupHR();
+		//$user_dept = new setupHR();
 		$user_permissions = new setupHR();
 	
 		// Query Data from Database
 		$motd = $motd_list->fetch_MOTD();
 		$role_name = $user_role->fetch_role_name($r_id);
-		$dept_name = $user_dept->fetch_user_dept($e_id);
+		//$dept_name = $user_dept->fetch_user_dept($e_id);
 		$perm_list = $user_permissions->fetch_user_permission($r_id);
 		
 	}
@@ -119,7 +119,7 @@
 	<script> 
 	
 			$("#create_emp").click(function(){
-                $("#mod_display").load("forms/register_employee_ops.html"); 
+                $("#mod_display").load("forms/insert/register_employee_ops.php"); 
             });
 			
 			$("#upd_emp").click(function(){

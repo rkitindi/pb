@@ -89,23 +89,81 @@ CREATE TABLE IF NOT EXISTS `pb_db`.`PersonalInfo_HR` (
  `EmployeeId` VARCHAR(255) NOT NULL,
  `FirstNames` VARCHAR(255) NOT NULL,
  `LastNames` VARCHAR(255) NOT NULL,
- `JoiningDate` DATE NOT NULL,
- `DepartmentId`  INT NOT NULL,
- `PositionTittle` VARCHAR(255) NOT NULL,
- `Gender` VARCHAR(255) NOT NULL,
+ `JoiningDate` DATE NOT NULL, 
+ `Gender` VARCHAR(1) NOT NULL,
  `DateofBirth` DATE NOT NULL,
+ `HomeAddress` VARCHAR(255) NOT NULL,
+ `EmpIdPhoto` VARCHAR(255) NOT NULL,
+ PRIMARY KEY (`EmployeeId`));
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`EmergencyContact_HR`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`EmergencyContact_HR`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`EmergencyContact_HR` (
+ `eContactId` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeId` VARCHAR(255) NOT NULL,
+ `FirstNames` VARCHAR(255) NOT NULL,
+ `LastNames` VARCHAR(255) NOT NULL,
+ `Email` VARCHAR(255), 
+ `Phone` INT NOT NULL,
+ `Address` VARCHAR(255) NOT NULL,
+ `Relationship` VARCHAR(255) NOT NULL,
+ `Other` VARCHAR(255),
+ PRIMARY KEY (`eContactId`),
+ INDEX `EmployeeId_idx` (`EmployeeId` ASC),
+ CONSTRAINT `EmployeeId_EC`
+ FOREIGN KEY (`EmployeeId`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`EmploymentTypeInfo_HR`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`EmploymentTypeInfo_HR`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`EmploymentTypeInfo_HR` (
+ `EmpTypeInfoId` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeId` VARCHAR(255) NOT NULL,
  `EmpTypeId` INT NOT NULL,
- PRIMARY KEY (`EmployeeId`), 
+ PRIMARY KEY (`EmpTypeInfoId`),
  INDEX `EmpTypeId_idx` (`EmpTypeId` ASC), 
- INDEX `DepartmentId_idx` (`DepartmentId` ASC),
- CONSTRAINT `EmpTypeId_PIH`
+ INDEX `EmployeeId_idx` (`EmployeeId` ASC),
+ CONSTRAINT `EmpTypeId_ETI`
  FOREIGN KEY (`EmpTypeId`)
  REFERENCES `pb_db`.`EmploymentType_HR` (`EmpTypeId`)
  ON DELETE CASCADE
  ON UPDATE CASCADE,
- CONSTRAINT `DepartmentId_PIH`
+ CONSTRAINT `EmployeeId_ETI`
+ FOREIGN KEY (`EmployeeId`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE);
+
+-- -----------------------------------------------------
+-- Table `pb_db`.`EmployeeDeptInfo_HR`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pb_db`.`EmployeeDeptInfo_HR`;
+
+CREATE TABLE IF NOT EXISTS `pb_db`.`EmployeeDeptInfo_HR` (
+ `EmpDeptInfoId` INT NOT NULL AUTO_INCREMENT,
+ `EmployeeId` VARCHAR(255) NOT NULL,
+ `DepartmentId` INT NOT NULL,
+ `PositionTitle` VARCHAR(255),
+ `RMID` VARCHAR(255),
+ PRIMARY KEY (`EmpDeptInfoId`),
+ INDEX `DepartmentId_idx` (`DepartmentId` ASC), 
+ INDEX `EmployeeId_idx` (`EmployeeId` ASC),
+ CONSTRAINT `DepartmentId_EDI`
  FOREIGN KEY (`DepartmentId`)
  REFERENCES `pb_db`.`Department_HR` (`DepartmentId`)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ CONSTRAINT `EmployeeId_EDI`
+ FOREIGN KEY (`EmployeeId`)
+ REFERENCES `pb_db`.`PersonalInfo_HR` (`EmployeeId`)
  ON DELETE CASCADE
  ON UPDATE CASCADE);
 
