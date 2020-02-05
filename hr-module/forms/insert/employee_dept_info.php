@@ -42,8 +42,8 @@
 					<select name="eid" id="eid">
 						<option selected>Please Select from List</option>
 							<?php foreach ($list as $key => $item): ?> 
-								<?php $deptid = $item['EmployeeId']; $deptname = $item['NAME']; ?>	 
-								<option value="<?php echo $deptid; ?>"><?php echo $deptname; ?> </option>		  
+								<?php $empid = $item['EmployeeId']; $name = $item['NAME']; ?>	 
+								<option value="<?php echo $empid; ?>"><?php echo $name; ?> </option>		  
 							<?php endforeach; ?>
 					</select>
 					<label for="deptname">Department name</label><br>

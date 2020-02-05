@@ -124,7 +124,60 @@
 				return $list;
 				
 			}	
+			
+			function fetch_employee_list_etype(){
+				$query = $this->link->prepare("SELECT PersonalInfo_HR.EmployeeId, CONCAT(PersonalInfo_HR.FirstNames, ' ', PersonalInfo_HR.LastNames) AS NAME FROM pb_db.PersonalInfo_HR WHERE PersonalInfo_HR.EmployeeId NOT IN (SELECT EmployeeID FROM pb_db.EmploymentTypeInfo_HR);");
+				try{
+					$query->execute();
+					$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+				}catch (PDOException $e){die($e->getMessage());}
+				return $result;
+			}
 
+			function fetch_employee_list_sal(){
+				$query = $this->link->prepare("SELECT PersonalInfo_HR.EmployeeId, CONCAT(PersonalInfo_HR.FirstNames, ' ', PersonalInfo_HR.LastNames) AS NAME FROM pb_db.PersonalInfo_HR WHERE PersonalInfo_HR.EmployeeId NOT IN (SELECT EmployeeID FROM `pb_db`.`SalaryInfo_HR`)");
+				try{
+					$query->execute();
+					$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+				}catch (PDOException $e){die($e->getMessage());}
+				return $result;
+			}
+			
+			function fetch_payschedule_list(){
+				$query = $this->link->prepare(" SELECT * FROM `pb_db`.`PaymentSchedule_HR` ");
+				try{
+					$query->execute();
+					$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+				}catch (PDOException $e){die($e->getMessage());}
+				return $result;
+			}
+			
+			function fetch_employee_list_leave(){
+				$query = $this->link->prepare("SELECT PersonalInfo_HR.EmployeeId, CONCAT(PersonalInfo_HR.FirstNames, ' ', PersonalInfo_HR.LastNames) AS NAME FROM pb_db.PersonalInfo_HR WHERE PersonalInfo_HR.EmployeeId NOT IN (SELECT EmployeeID FROM `pb_db`.`LeaveInfo_HR`)");
+				try{
+					$query->execute();
+					$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+				}catch (PDOException $e){die($e->getMessage());}
+				return $result;
+			}
+			
+			function fetch_leavetypes_list(){
+				$query = $this->link->prepare(" SELECT * FROM `pb_db`.`LeaveType_HR` ");
+				try{
+					$query->execute();
+					$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+				}catch (PDOException $e){die($e->getMessage());}
+				return $result;
+			}
+		
+			function fetch_employee_list_binfo(){
+				$query = $this->link->prepare("SELECT PersonalInfo_HR.EmployeeId, CONCAT(PersonalInfo_HR.FirstNames, ' ', PersonalInfo_HR.LastNames) AS NAME FROM pb_db.PersonalInfo_HR WHERE PersonalInfo_HR.EmployeeId NOT IN (SELECT EmployeeID FROM `pb_db`.`BankInfo_HR`)");
+				try{
+					$query->execute();
+					$result = $query->fetchAll(PDO::FETCH_ASSOC);	
+				}catch (PDOException $e){die($e->getMessage());}
+				return $result;
+			}
 	
 		}
 

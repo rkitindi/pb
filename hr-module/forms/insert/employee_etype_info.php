@@ -15,12 +15,13 @@
 		include "../../scripts/setup.php";
 	
 		// read the product categories from the database
-		$returned_departmentlist = new setupHR();
+		$returned_employeelist = new setupHR();
 		$returned_employmenttypelist = new setupHR();
-		$departmentlist = $returned_departmentlist->fetch_department_list();
+		$employeelist = $returned_employeelist->fetch_employee_list_etype();
 		$employmenttypelist = $returned_employmenttypelist->fetch_employmenttype_list();
 	
 	}
+	
 ?>
 
 <!DOCTYPE html>
@@ -35,18 +36,18 @@
 <body>
 
 	<div id="form_wrapper">
-			<div id="form_section1">FILL THIS FORM BELOW TO ADD EMPLOYEE DETAILS</div>
-			<form id="motd-form">
+			<div id="form_section1">FILL THIS FORM BELOW TO ADD EMPLOYEE´S EMPLOYMENT TYPE</div>
+			<form id="etype-form">
 				<div id="form_section2">				
 					<label for="eid">Employee ID</label><br>
-					<select name="eid">
+					<select name="eid" id="eid">
 						<option selected>Please Select from List</option>
-							<?php foreach ($employmenttypelist as $key => $item): ?> 
-								<?php $deptid = $item['EmpTypeId']; $deptname = $item['EmploymentType']; ?>	 
-								<option value="<?php echo $deptid; ?>"><?php echo $deptname; ?> </option>		  
+							<?php foreach ($employeelist as $key => $item): ?> 
+								<?php $empid = $item['EmployeeId']; $name = $item['NAME']; ?>	 
+								<option value="<?php echo $empid; ?>"><?php echo $name; ?> </option>		  
 							<?php endforeach; ?>
 					</select>
-					<select name="etype">
+					<select name="etype" id="etype">
 						<option selected>Please Select from List</option>
 							<?php foreach ($employmenttypelist as $key => $item): ?> 
 								<?php $deptid = $item['EmpTypeId']; $deptname = $item['EmploymentType']; ?>	 
@@ -55,28 +56,40 @@
 					</select>
 				</div>
 				<div id="form_bottons">
-					<div id="submit"><input id="search" type="submit" name="insert" value="SUBMIT"></div>
-					<div id="reset"><input type="reset" value="RESET" /> </form></div>
+					<div id="submit"><input id="submit-btn" type="submit" name="insert" value="SUBMIT" /></div>
+					<div id="reset"><input type="reset" value="RESET" /></div>
 				</div>
 			</form>
 	</div>
 	
-		<script> 
-            $("#search").click(function(){
-               	$.post("scripts/insert_empetypinfo.php", $("#motd-form").serialize(), function(response) {
+	<script> 
+		
+		$("#submit-btn").click(function(){
+					
+			var employeeid = $("#eid").val();
+			var etype = $("#etype").val();
+					
+			if (employeeid === 'Please Select from List') {
+				alert("Please select Employee from the list and then proceed!");
+				$('#eid').focus();
+				return false;
+			}else if (etype === 'Please Select from List') {
+				alert("Please select Employee Type from the list and then proceed!");
+				$('#etype').focus();
+				return false;
+			}else{					
+					
+				$.post("scripts/insert_empetypinfo.php", $("#etype-form").serialize(), function(response) {
 					$("#mod_display").html(response);
 				});
+						
+			}					
+					
 			return false;
-            });
 			
-			function limit(element){
-				var max_chars = 6;
-				if(element.value.length > max_chars) {
-					element.value = element.value.substr(0, max_chars);
-				}
-			}
+		});
 			
-		</script>
+	</script>
 		
 
 </body>

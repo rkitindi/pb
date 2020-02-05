@@ -52,13 +52,13 @@
                 $("#mod_display").load("forms/insert/employee_etype_info.php"); 
             });
 			$("#sinfo").click(function(){
-                $("#mod_display").load("forms/salary_info.php"); 
+                $("#mod_display").load("forms/insert/salary_info.php"); 
             });
 			$("#linfo").click(function(){
-                $("#mod_display").load("forms/leave_info.php"); 
+                $("#mod_display").load("forms/insert/leave_info.php"); 
             });
 			$("#binfo").click(function(){
-                $("#mod_display").load("forms/bank_info.php"); 
+                $("#mod_display").load("forms/insert/bank_info.php"); 
             });
 		</script>
 </body>
