@@ -3,12 +3,6 @@
 	//Start Session
 	session_start();
 	
-	
-	// Include Queries
-	include "scripts/production_setup.php";
-		
-
-	
 	if(!isset($_SESSION)){
 		
 		// Redirect user to index page	
@@ -17,6 +11,9 @@
 		
 	}else{
 	
+		// Include Queries
+		include "scripts/production_setup.php";
+		
 		// Get Session Details
 		$e_id = $_SESSION['EmployeeID'];
 		$r_id = $_SESSION['RoleID'];

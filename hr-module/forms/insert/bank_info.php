@@ -43,16 +43,18 @@
 								<option value="<?php echo $empid; ?>"><?php echo $name; ?> </option>		  
 							<?php endforeach; ?>
 					</select>
-					<label for="bname">Bank Name:</label><br>
-					<input type="text" id="bname" name="bname" required placeholder="Speficy Ful Bank Name"><br>
-					<label for="bcode">Bank Code:</label><br>
-					<input type="number" id="days" name="bcode" required placeholder="Bank Code"><br>
-					<label for="bcnumber">Branch Code:</label><br>
-					<input type="text" id="bcnumber" name="bcnumber" required placeholder="Branch Code Number"><br>
+					<label for="baname">Bank Name:</label><br>
+					<input type="text" id="baname" name="baname" required placeholder="Speficy Ful Bank Name"><br>
+					<label for="bacode">Bank Code:</label><br>
+					<input type="text" id="bacode" name="bacode" required placeholder="Bank Code"><br>
+					<label for="brname">Branch  Name:</label><br>
+					<input type="text" id="brname" name="brname" required placeholder="Speficy Ful Branch Name"><br>
+					<label for="brcode">Branch Code:</label><br>
+					<input type="number" id="brcode" name="brcode" required placeholder="Branch Code Number"><br>
 					<label for="acnum">Bank Acount Number:</label><br>
 					<input type="number" id="acnum" name="acnum" required placeholder="Account Number"><br>
 					<label for="clabe">CLABE:</label><br>
-					<input type="text" id="clabe" name="clabe" required placeholder="CLABE"><br>
+					<input type="number" id="clabe" name="clabe" required placeholder="CLABE"><br>
 					<label for="actype">Account Type:</label><br>
 					<input type="text" id="actype" name="actype" required placeholder="Account Type"><br>
 				</div>
@@ -68,9 +70,10 @@
 		$("#submit-btn").click(function(){
 					
 			var employeeid = $("#eid").val();
-			var bname = $("#bname").val();
-			var bcode = $("#bcode").val();
-			var bcnumber = $("#bcnumber").val();
+			var baname = $("#baname").val();
+			var brname = $("#brname").val();
+			var bacode = $("#bacode").val();
+			var brcode = $("#brcode").val();
 			var acnum = $("#acnum").val();
 			var clabe = $("#clabe").val();
 			var actype = $("#actype").val();
@@ -78,20 +81,36 @@
 				alert("Please select Employee from the list and then proceed!");
 				$('#eid').focus();
 				return false;
-			}else if (bname === ''){
+			}else if (baname === ''){
 				alert("Bank Name cannot be empty!");
-				$('#bname').focus();
+				$('#baname').focus();
 				return false;
-			}else if (bcode === ''){
+			}else if (bacode === ''){
 				alert("Bank Code cannot be empty!");
-				$('#bcode').focus();
+				$('#bacode').focus();
 				return false;
-			}else if (bcnumber === ''){
+			}else if (brname === ''){
+				alert("Branch Name cannot be empty!");
+				$('#brname').focus();
+				return false;
+			}else if (brcode === ''){
 				alert("Branch Code Number cannot be empty!");
-				$('#bcnumber').focus();
+				$('#brcode').focus();
+				return false;
+			}else if (acnum === ''){
+				alert("Account Number cannot be empty!");
+				$('#acnum').focus();
+				return false;
+			}else if ( acnum.length !== 10 ){
+				alert("Account Number must be 10 Digits!");
+				$('#acnum').focus();
 				return false;
 			}else if (clabe === ''){
 				alert("CLABE cannot be empty!");
+				$('#clabe').focus();
+				return false;
+			}else if (clabe.length !== 18 ){
+				alert("CLABE must be 18 Digits!");
 				$('#clabe').focus();
 				return false;
 			}else if (actype === ''){

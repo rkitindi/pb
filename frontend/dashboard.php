@@ -4,10 +4,7 @@
 	session_start();
 	
 	
-	// Include Queries
-	include "scripts/fe_queries.php";
 
-	
 	if(!isset($_SESSION)){
 		
 		// Redirect user to index page	
@@ -16,6 +13,10 @@
 		
 	}else{
 	
+		// Include Queries
+		include "scripts/fe_queries.php";
+		
+		
 		// Get Session Details
 		$e_id = $_SESSION['EmployeeID'];
 		$r_id = $_SESSION['RoleID'];
@@ -25,14 +26,14 @@
 		$motd_list = new queryFRONTEND();	
 		$User_name = new queryFRONTEND();
 		$user_role = new queryFRONTEND();
-		//$user_dept = new queryFRONTEND();
+		$user_dept = new queryFRONTEND();
 		$user_permissions = new queryFRONTEND();
 	
 		// Query Data from Database
 		$motd = $motd_list->fetch_MOTD();
 		$name = $User_name->fetch_employee_name($e_id);
 		$role_name = $user_role->fetch_role_name($r_id);
-		//$dept_name = $user_dept->fetch_user_dept($e_id);
+		$dept_name = $user_dept->fetch_user_dept($e_id);
 		$perm_list = $user_permissions->fetch_user_permission($r_id);
 		
 	}

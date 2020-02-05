@@ -4,11 +4,6 @@
 	session_start();
 	
 	
-	// Include Queries
-	include "scripts/accounting_queries.php";
-		
-
-	
 	if(!isset($_SESSION)){
 		
 		// Redirect user to index page	
@@ -16,7 +11,11 @@
 		exit;
 		
 	}else{
-	
+		
+		// Include Queries
+		include "scripts/accounting_queries.php";
+		
+
 		// Get Session Details
 		$e_id = $_SESSION['EmployeeID'];
 		$r_id = $_SESSION['RoleID'];
@@ -59,22 +58,22 @@
 			 <?php
 				//Visible to Admin only
 				if( ($role_name == "admin") OR ($dept_name == "administration")){?>
-                 <li><a href="../frontend/index.html">HOME</a></li>
-                 <li><a href="../hr-module/hr-mod.php">HR</a></li>
-				 <li><a href="../prod-module/prod-mod.php">PRODUCTION</a></li>
-                 <li><a href="#" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
-                 <li><a href="../sales-module/sales-mod.php">SALES</a></li>
-				 <li><a href="../finance-module/finance-mod.php">FINANCE</a></li>
-				 <li><a href="../mgmnt-module/mgmnt-mod.php">MANAGEMENT</a></li>
-                 <li><a href="../reports-module/reports-mod.php">REPORTS</a></li>
-                 <li><a href="../analytics-module/analytics-mod.php">TRENDS</a></li>
-				 <li><a href="../admin-module/admin-mod.php">ADMIN</a></li>
+                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a href="../hr-module/hr-mod.php" class="btn btn-primary btn-xs">HR</a></li>
+				 <li><a href="../prod-module/prod-mod.php" class="btn btn-primary btn-xs">PRODUCTION</a></li>
+                 <li><a href="#" class="btn btn-primary btn-xs" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
+                 <li><a href="../sales-module/sales-mod.php" class="btn btn-primary btn-xs">SALES</a></li>
+				 <li><a href="../finance-module/finance-mod.php" class="btn btn-primary btn-xs">FINANCE</a></li>
+				 <li><a href="../mgmnt-module/mgmnt-mod.php" class="btn btn-primary btn-xs">MANAGEMENT</a></li>
+                 <li><a href="../reports-module/reports-mod.php" class="btn btn-primary btn-xs">REPORTS</a></li>
+                 <li><a href="../analytics-module/analytics-mod.php" class="btn btn-primary btn-xs">TRENDS</a></li>
+				 <li><a href="../admin-module/admin-mod.php" class="btn btn-primary btn-xs">ADMIN</a></li>
 			 <?php }else{ ?>
 			 	 <!-- VISIBLE TO ACCOUNTING DEPARTMENT ONLY -->
-                 <li><a class="btn btn-primary btn-xs" disabled>HOME</a></li>
+                 <li><a type="button" class="btn btn-primary btn-xs" disabled>HOME</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>HR</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>PRODUCTION</a></li>
-                 <li><a href="#" class="btn btn-primary btn-xs" disabled>ACCOUNTING</a></li>
+                 <li><a href="#" class="btn btn-primary btn-xs">ACCOUNTING</a></li>
                  <li><a class="btn btn-primary btn-xs" disabled>SALES</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>FINANCE</a></li>
 				 <li><a class="btn btn-primary btn-xs" disabled>MANAGEMENT</a></li>

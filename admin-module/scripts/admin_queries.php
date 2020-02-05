@@ -79,7 +79,7 @@ class queryADMIN{
 	}
 	
     function fetch_user_dept($e_id){
-		$query = $this->link->prepare("SELECT Department_HR.DepartmentName AS D_NAME FROM `pb_db`.`Department_HR` JOIN `pb_db`.`PersonalInfo_HR` ON `pb_db`.`PersonalInfo_HR`.DepartmentId = `pb_db`.`Department_HR`.DepartmentId  WHERE `pb_db`.`PersonalInfo_HR`.EmployeeId = ?");
+		$query = $this->link->prepare("SELECT Department_HR.DepartmentName AS D_NAME FROM `pb_db`.`Department_HR` JOIN `pb_db`.`EmployeeDeptInfo_HR` ON `pb_db`.`EmployeeDeptInfo_HR`.DepartmentId = `pb_db`.`Department_HR`.DepartmentId  WHERE `pb_db`.`EmployeeDeptInfo_HR`.EmployeeId = ?");
      	try{
 			$values = array($e_id);
 			$query->execute($values);

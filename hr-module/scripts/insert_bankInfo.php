@@ -5,14 +5,15 @@
 
 	// Define variables and initialize with empty values
    	$eid = "";
-	$bname = "";
-	$bcode = "";
-	$bcnumber = "";
+	$baname = "";
+	$bacode = "";
+	$brname = "";
+	$brcode = "";
 	$acnum = "";
 	$clabe = "";
 	$actype = "";
 	
-	class employeeLeaveInfoActions{
+	class employeeBankInfoActions{
 
 		public $link; 
 
@@ -24,27 +25,28 @@
 		}
 	
 		// Insert Function
-		function insert_employee_details($eid,$bname,$bcode,$bcnumber,$acnum,$clabe,$actype){
-			$query = $this->link->prepare("INSERT INTO `pb_db`.`BankInfo_HR` (EmployeeId, BankName, BankCode, BranchCodeNumber, AccountNumber, CLABE, AccountType) VALUES (?,?,?,?,?,?,?)");
-			$values = array($eid,$bname,$bcode,$bcnumber,$acnum,$clabe,$actype);
+		function insert_employee_details($eid,$baname,$bacode,$brname,$brcode,$acnum,$clabe,$actype){
+			$query = $this->link->prepare("INSERT INTO `pb_db`.`BankInfo_HR` (EmployeeId, BankName, BankCode, BranchName, BranchCodeNumber, AccountNumber, CLABE, AccountType) VALUES (?,?,?,?,?,?,?,?)");
+			$values = array($eid,$baname,$bacode,$brname,$brcode,$acnum,$clabe,$actype);
 			$query->execute($values);
 		}	
 
 	}
 
 
-	$action = new employeeLeaveInfoActions();
+	$action = new employeeBankInfoActions();
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		$eid = trim($_POST['eid'] ?? '');
-		$bname = trim($_POST['bname'] ?? '');
-		$bcode = trim($_POST['bcode'] ?? '');
-		$bcnumber = trim($_POST['bcnumber'] ?? '');
+		$baname = trim($_POST['baname'] ?? '');
+		$bacode = trim($_POST['bacode'] ?? '');
+		$brname = trim($_POST['brname'] ?? '');
+		$brcode = trim($_POST['brcode'] ?? '');
 		$acnum = trim($_POST['acnum'] ?? '');
 		$clabe = trim($_POST['clabe'] ?? '');
 		$actype = trim($_POST['actype'] ?? '');
 	 
-		echo $action->insert_employee_details($eid,$bname,$bcode,$bcnumber,$acnum,$clabe,$actype);	
+		echo $action->insert_employee_details($eid,$baname,$bacode,$brname,$brcode,$acnum,$clabe,$actype);	
 		echo "Employee Bank Info Inserted Successfully!!";
 		
 	}		
