@@ -131,7 +131,7 @@
             });
 			
 			$("#setup").click(function(){
-                $("#mod_display").load("forms/setup_hr.html"); 
+                $("#mod_display").load("forms/setup/setup_hr.php"); 
             });
 			
 			$("#repopro").click(function(){

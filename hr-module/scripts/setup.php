@@ -178,11 +178,53 @@
 				}catch (PDOException $e){die($e->getMessage());}
 				return $result;
 			}
+			
+			function check_etype_exist($etype){
+				$query = $this->link->prepare("SELECT * FROM  `pb_db`.`EmploymentType_HR` WHERE EmploymentType = ?");
+				$values = array($etype);
+				$query->execute($values);
+				$counts = $query->rowCount();
+				return $counts; 
+			}
+			
+			function check_ptype_exist($ptype){
+				$query = $this->link->prepare("SELECT * FROM `PaymentType_HR` WHERE PaymentType = ?");
+				$values = array($ptype);
+				$query->execute($values);
+				$counts = $query->rowCount();
+				return $counts; 
+			}	
+			
+			function check_payschedule_exist($payschedule){
+				$query = $this->link->prepare("SELECT * FROM `PaymentSchedule_HR` WHERE PaymentSchedule = ?");
+				$values = array($payschedule);
+				$query->execute($values);
+				$counts = $query->rowCount();
+				return $counts; 
+			}	
+			
+
+			function check_leavetype_exist($lvtype){
+				$query = $this->link->prepare("SELECT * FROM `LeaveType_HR` WHERE LeaveType = ?");
+				$values = array($lvtype);
+				$query->execute($values);
+				$counts = $query->rowCount();
+				return $counts; 
+			}	
+		
+			function check_deptname_exist($deptname){
+				$query = $this->link->prepare("SELECT * FROM `Department_HR` WHERE DepartmentName = ?");
+				$values = array($deptname);
+				$query->execute($values);
+				$counts = $query->rowCount();
+				return $counts; 
+			}	
+	
 	
 		}
 
 		//Create Object 
-		$fetch_managers = new setupHR();
+		$fetch_info = new setupHR();
 
 		// Receive variables from jquery and fetch data
 		if(  isset($_POST['EID']) AND  isset($_POST['DID']) ){
@@ -190,9 +232,56 @@
 			//$data = array();
 			$EID = $_POST['EID'];
 			$DID = $_POST['DID'];
-			$depit = $fetch_managers->fetch_manager_list($DID,$EID);
+			$depit = $fetch_info->fetch_manager_list($DID,$EID);
 			$jqueryArray = json_encode($depit, JSON_PRETTY_PRINT);
 			echo $jqueryArray;
+			
 		}
+		
+		// Check if Employment Type Exists
+		if(  isset($_POST['ETYPE']) ){
+
+			$etype = $_POST['ETYPE'];
+			$check = $fetch_info->check_etype_exist($etype);
+			echo $check;
+			
+		}
+		
+	    // Check if PTYPE exists
+		if(  isset($_POST['ptype']) ){
+
+			$ptype = $_POST['ptype'];
+			$check = $fetch_info->check_ptype_exist($ptype);
+			echo $check;
+			
+		}
+		
+	    // Check if PSCHEDULE exists
+		if(  isset($_POST['payschedule']) ){
+
+			$payschedule = $_POST['payschedule'];
+			$check = $fetch_info->check_payschedule_exist($payschedule);
+			echo $check;
+			
+		}
+
+	    // Check if LEAVE TYPE exists
+		if(  isset($_POST['lvtype']) ){
+
+			$lvtype = $_POST['lvtype'];
+			$check = $fetch_info->check_leavetype_exist($lvtype);
+			echo $check;
+			
+		}
+		
+		// Check if deptname  exists
+		if(  isset($_POST['deptname']) ){
+
+			$deptname = $_POST['deptname'];
+			$check = $fetch_info->check_deptname_exist($deptname);
+			echo $check;
+			
+		}
+		
 
 ?>
