@@ -26,7 +26,7 @@
 	
 		// Insert Function
 		function insert_emergency_details($eid,$fname,$lname,$email,$phone,$address,$relate,$others){
-			$query = $this->link->prepare("INSERT INTO `EmergencyContact_HR` (EmployeeId, FirstNames, LastNames, Email, Phone, Address, Relationship, Other) VALUES (?,?,?,?,?,?,?,?)");
+			$query = $this->link->prepare("INSERT INTO emergencycontact_hr (EmployeeId, FirstNames, LastNames, Email, Phone, Address, Relationship, Other) VALUES (?,?,?,?,?,?,?,?)");
 			$values = array($eid,$fname,$lname,$email,$phone,$address,$relate,$others);
 			$query->execute($values);
 		}	

@@ -105,7 +105,7 @@ class casedetailActions{
 
 // This function checks if case exist in database
 	function check_case_exist($casecode){
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`CaseDetails_PROD` WHERE caseCode = ?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.casedetails_prod WHERE caseCode = ?");
      	$values = array($casecode);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -128,7 +128,7 @@ class casedetailActions{
 	
 // Insert Function
     function insert_case_details($casecode,$cname,$bname,$imagepath,$pprice,$csup){
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`CaseDetails_PROD` (caseCode, CaseName, BrandId, casePhoto, PurchasePrice, SupplierId) VALUES (?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.casedetails_prod (caseCode, CaseName, BrandId, casePhoto, PurchasePrice, SupplierId) VALUES (?,?,?,?,?,?)");
 		$values = array($casecode,$cname,$bname,$imagepath,$pprice,$csup);
 		$query->execute($values);			
     }	

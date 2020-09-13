@@ -39,7 +39,7 @@ class suppliercatActions{
 	
 // This function checks if TODAY's MOTD exist in database
 	function check_supcat_exist($catid){
-		$query = $this->link->prepare("SELECT * FROM `SupplierCategory_PROD` WHERE CategoryId = ?");
+		$query = $this->link->prepare("SELECT * FROM suppliercategory_prod WHERE CategoryId = ?");
      	$values = array($catid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -49,7 +49,7 @@ class suppliercatActions{
 	
 // Insert Function
     function insert_supcat($catid,$supcat,$description){
-		$query = $this->link->prepare("INSERT INTO `SupplierCategory_PROD` (CategoryId, CategoryName, Description) VALUES (?,?,?)");
+		$query = $this->link->prepare("INSERT INTO suppliercategory_prod (CategoryId, CategoryName, Description) VALUES (?,?,?)");
 		$values = array($catid,$supcat,$description);
 		$query->execute($values);				
     }	

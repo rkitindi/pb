@@ -7,24 +7,24 @@
    	$ptype = "";
 	$ptypedesc = "";
 
- 
+
 	class paytypeActions{
 
-		public $link; 
+		public $link;
 
 
 		function __construct(){
 			$db_connection = new dbConnection();
-			$this->link = $db_connection->connect();   
+			$this->link = $db_connection->connect();
 			return $this->link;
 		}
 
 		// Insert Function
 		function insert_etype($ptype,$ptypedesc){
-			$query = $this->link->prepare("INSERT INTO `PaymentType_HR` (PaymentType, Description) VALUES (?,?)");
+			$query = $this->link->prepare("INSERT INTO paymenttype_hr (PaymentType, Description) VALUES (?,?)");
 			$values = array($ptype,$ptypedesc);
-			$query->execute($values);				
-		}	
+			$query->execute($values);
+		}
 	}
 
 	$action = new paytypeActions();
@@ -32,8 +32,8 @@
 		$ptype = trim($_POST['ptype'] ?? '');
 		$ptypedesc = trim($_POST['ptypedesc'] ?? '');
 		echo $action->insert_etype($ptype,$ptypedesc);
-		echo "PAYMENT TYPE added successfully!!";	
-	}	
+		echo "PAYMENT TYPE added successfully!!";
+	}
 
 
 ?>

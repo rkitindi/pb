@@ -66,7 +66,7 @@ class prodreceiptActions{
 // This function checks if prodreceipt exist in database
 	function check_record_exist($bid){		
 		
-		$query = $this->link->prepare("SELECT  * FROM  `pb_db`.`BatchExp_ACC` WHERE  BatchId = ?");
+		$query = $this->link->prepare("SELECT  * FROM  pb_db.batchexp_acc WHERE  BatchId = ?");
      	$values = array($bid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -76,7 +76,7 @@ class prodreceiptActions{
 // This function retrieve batchID	
 	function get_batch_id($control_num,$cycle){
 		
-		$query = $this->link->prepare("SELECT BatchId FROM `pb_db`.`BatchDetails_ACC` WHERE ControlNumber = ? and RangeCycle = ?");
+		$query = $this->link->prepare("SELECT BatchId FROM pb_db.batchdetails_acc WHERE ControlNumber = ? and RangeCycle = ?");
 		try{
 			$values = array($control_num,$cycle);
 			$query->execute($values);
@@ -125,7 +125,7 @@ class prodreceiptActions{
 	
 	// Insert Function
     function insert_batchexp_details($bid,$fcost,$iva,$riva){
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`BatchExp_ACC` (BatchId, FreighCost, iva, retiva) VALUES (?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.batchexp_acc (BatchId, FreighCost, iva, retiva) VALUES (?,?,?,?)");
 		$values = array($bid,$fcost,$iva,$riva);
 		$query->execute($values);				
     }	

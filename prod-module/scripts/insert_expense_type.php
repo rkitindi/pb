@@ -37,7 +37,7 @@ class expensetypeActions{
 	
 // This function checks if TODAY's MOTD exist in database
 	function check_exptype_exist($exptype){
-		$query = $this->link->prepare("SELECT * FROM `ExpenseType_PROD` WHERE ExpenseType = ?");
+		$query = $this->link->prepare("SELECT * FROM expensetype_prod WHERE ExpenseType = ?");
      	$values = array($exptype);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -47,7 +47,7 @@ class expensetypeActions{
 	
 // Insert Function
     function insert_exptype($exptype,$description){
-		$query = $this->link->prepare("INSERT INTO `ExpenseType_PROD` (ExpenseType, Description) VALUES (?,?)");
+		$query = $this->link->prepare("INSERT INTO expensetype_prod (ExpenseType, Description) VALUES (?,?)");
 		$values = array($exptype,$description);
 		$query->execute($values);
 		echo "EXPENSE TYPE added successfully";		

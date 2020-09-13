@@ -60,7 +60,7 @@ class truckdetailActions{
 
 // This function checks if truck exist in database
 	function check_truck_exist($treg){
-		$query = $this->link->prepare("SELECT * FROM `truckInfo_PROD` WHERE RegNumber = ?");
+		$query = $this->link->prepare("SELECT * FROM truckinfo_prod WHERE RegNumber = ?");
      	$values = array($treg);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -69,7 +69,7 @@ class truckdetailActions{
 	
 // Insert Function
     function insert_truck_details($treg,$tmake,$tmodel,$tcap,$tdriver,$tsup){
-		$query = $this->link->prepare("INSERT INTO `truckInfo_PROD` (RegNumber, Make, Model, Capacity, DriverName, SupplierId) VALUES (?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO truckinfo_prod (RegNumber, Make, Model, Capacity, DriverName, SupplierId) VALUES (?,?,?,?,?,?)");
 		$values = array($treg,$tmake,$tmodel,$tcap,$tdriver,$tsup);
 		$query->execute($values);
 		echo "truck DETAILS added successfully";		

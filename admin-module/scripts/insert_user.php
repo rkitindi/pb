@@ -73,7 +73,7 @@ class userActions{
    // This function checks if LOGIN NAME exist in database
 	function check_loginname_exist($lname){
 		
-		$query = $this->link->prepare("SELECT * FROM `UserDetails_ADM` WHERE LoginName = ?");
+		$query = $this->link->prepare("SELECT * FROM userdetails_adm WHERE LoginName = ?");
      	$values = array($lname);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -84,7 +84,7 @@ class userActions{
    // Insert Function
     function insert_login_details($eid,$rid,$lname,$password){
 		
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`UserDetails_ADM` (EmployeeID, RoleID, LoginName, Password) VALUES (?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.userdetails_adm (EmployeeID, RoleID, LoginName, Password) VALUES (?,?,?,?)");
 		$values = array($eid,$rid,$lname,$password);
 		$query->execute($values);	
 		

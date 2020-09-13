@@ -26,7 +26,7 @@
 	
 		// Insert Function
 		function insert_employee_details($eid,$baname,$bacode,$brname,$brcode,$acnum,$clabe,$actype){
-			$query = $this->link->prepare("INSERT INTO `pb_db`.`BankInfo_HR` (EmployeeId, BankName, BankCode, BranchName, BranchCodeNumber, AccountNumber, CLABE, AccountType) VALUES (?,?,?,?,?,?,?,?)");
+			$query = $this->link->prepare("INSERT INTO pb_db.bankinfo_hr (EmployeeId, BankName, BankCode, BranchName, BranchCodeNumber, AccountNumber, CLABE, AccountType) VALUES (?,?,?,?,?,?,?,?)");
 			$values = array($eid,$baname,$bacode,$brname,$brcode,$acnum,$clabe,$actype);
 			$query->execute($values);
 		}	

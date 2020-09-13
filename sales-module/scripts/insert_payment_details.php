@@ -193,7 +193,7 @@ class DebtCollectionActions{
 	// This function returns CUSTOMER DEBT
 	function fetch_customer_debt($stid){
 
-		$query = $this->link->prepare("SELECT SaleProductReceived_SAL.SalesRef, (SaleProductReceived_SAL.Quantity*SaleProductReceived_SAL.UnitPrice) AS TOTAL, COALESCE(SUM(CollectPayment_SAL.Amount),0) as PAID, ((SaleProductReceived_SAL.Quantity*SaleProductReceived_SAL.UnitPrice) - COALESCE(SUM(CollectPayment_SAL.Amount),0)) AS DEBT, CustomerDetails_SAL.ContactName, SaleProductReceived_SAL.PaymentMethod, DispatchProduct_ACC.POSId FROM SaleProductReceived_SAL LEFT JOIN CollectPayment_SAL ON CollectPayment_SAL.SalesRef = SaleProductReceived_SAL.SalesRef JOIN CustomerDetails_SAL ON CustomerDetails_SAL.CustomerId = SaleProductReceived_SAL.CustomerId JOIN ProductReceived_SAL ON ProductReceived_SAL.ProductReceiptId = SaleProductReceived_SAL.ProductReceiptId JOIN DispatchProduct_ACC ON DispatchProduct_ACC.DispatchRefNum = ProductReceived_SAL.DispatchRefNum GROUP BY 1 HAVING SaleProductReceived_SAL.PaymentMethod = 'credit' AND DEBT > 0 AND SaleProductReceived_SAL.SalesRef = ?");		
+		$query = $this->link->prepare("SELECT saleproductreceived_sal.SalesRef, (saleproductreceived_sal.Quantity*saleproductreceived_sal.UnitPrice) AS TOTAL, COALESCE(SUM(collectpayment_sal.Amount),0) as PAID, ((saleproductreceived_sal.Quantity*saleproductreceived_sal.UnitPrice) - COALESCE(SUM(collectpayment_sal.Amount),0)) AS DEBT, customerdetails_sal.ContactName, saleproductreceived_sal.PaymentMethod, dispatchproduct_acc.POSId FROM saleproductreceived_sal LEFT JOIN collectpayment_sal ON collectpayment_sal.SalesRef = saleproductreceived_sal.SalesRef JOIN customerdetails_sal ON customerdetails_sal.CustomerId = saleproductreceived_sal.CustomerId JOIN productreceived_sal ON productreceived_sal.ProductReceiptId = saleproductreceived_sal.ProductReceiptId JOIN dispatchproduct_acc ON dispatchproduct_acc.DispatchRefNum = productreceived_sal.DispatchRefNum GROUP BY 1 HAVING saleproductreceived_sal.PaymentMethod = 'credit' AND DEBT > 0 AND saleproductreceived_sal.SalesRef = ?");		
 		$values = array($stid);
 		$query->execute($values);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -218,7 +218,7 @@ class DebtCollectionActions{
 	// Insert Function
     function insert_DebtCollection($stid,$amount,$paymet,$paydate,$imagepath,$confirmed,$comment){
 		
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`CollectPayment_SAL` (SalesRef, Amount, PaymentMethod, PaymentDate, Attachment, Confirmation, Comments) VALUES (?,?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.collectpayment_sal (SalesRef, Amount, PaymentMethod, PaymentDate, Attachment, Confirmation, Comments) VALUES (?,?,?,?,?,?,?)");
 		$values = array($stid,$amount,$paymet,$paydate,$imagepath,$confirmed,$comment);
 		$query->execute($values);	
 

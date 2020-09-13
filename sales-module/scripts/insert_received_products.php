@@ -86,7 +86,7 @@ class prodrecatchActions{
    // This Fetch Available Product Stock	
 	function fetch_dispatched($dprod){
 		
-		$query = $this->link->prepare("SELECT DispatchProduct_ACC.Quantity AS Dispatched FROM DispatchProduct_ACC WHERE DispatchProduct_ACC.DispatchRefNum = ?");
+		$query = $this->link->prepare("SELECT dispatchproduct_acc.Quantity AS Dispatched FROM dispatchproduct_acc WHERE dispatchproduct_acc.DispatchRefNum = ?");
 		try{
 			$values = array($dprod);
 			$query->execute($values);
@@ -101,7 +101,7 @@ class prodrecatchActions{
 	// This Check If Record Exists	
 	function check_record_exists($dprod){
 		
-		$query = $this->link->prepare("select * from `pb_db`.`ProductReceived_SAL` WHERE DispatchRefNum = ?");
+		$query = $this->link->prepare("select * from pb_db.productreceived_sal WHERE DispatchRefNum = ?");
 		try{
 			$values = array($dprod);
 			$query->execute($values);
@@ -117,7 +117,7 @@ class prodrecatchActions{
 	
     // Insert Function
     function insert_receivedprod_details($dprod,$quantity,$drec,$received,$comment){
-		$query = $this->link->prepare("INSERT  INTO  `pb_db`.`ProductReceived_SAL` (DispatchRefNum, Quantity, DateReceived, Received, Comments) VALUES (?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT  INTO  pb_db.productreceived_sal (DispatchRefNum, Quantity, DateReceived, Received, Comments) VALUES (?,?,?,?,?)");
 		$values = array($dprod,$quantity,$drec,$received,$comment);
 		$query->execute($values);				
     }	

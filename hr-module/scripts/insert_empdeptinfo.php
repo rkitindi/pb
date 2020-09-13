@@ -23,7 +23,7 @@
 	
 		// Insert Function
 		function insert_employeedeptinfo_details($eid,$deptname,$tittle,$rm){
-			$query = $this->link->prepare("INSERT INTO `EmployeeDeptInfo_HR` (EmployeeId, DepartmentId, PositionTitle, RMID) VALUES (?,?,?,?)");
+			$query = $this->link->prepare("INSERT INTO employeedeptinfo_hr (EmployeeId, DepartmentId, PositionTitle, RMID) VALUES (?,?,?,?)");
 			$values = array($eid,$deptname,$tittle,$rm);
 			$query->execute($values);
 		}	

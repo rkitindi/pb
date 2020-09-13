@@ -23,7 +23,7 @@
 	
 		// Insert Function
 		function insert_employee_details($eid,$ltype,$sdate,$edate){
-			$query = $this->link->prepare("INSERT INTO `pb_db`.`LeaveInfo_HR` (EmployeeId, LeaveTypeId, StartDate, EndDate) VALUES (?,?,?,?)");
+			$query = $this->link->prepare("INSERT INTO pb_db.leaveinfo_hr (EmployeeId, LeaveTypeId, StartDate, EndDate) VALUES (?,?,?,?)");
 			$values = array($eid,$ltype,$sdate,$edate);
 			$query->execute($values);
 		}	

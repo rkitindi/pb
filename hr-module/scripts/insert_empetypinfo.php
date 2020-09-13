@@ -21,7 +21,7 @@
 	
 		// Insert Function
 		function insert_employee_details($eid,$etype){
-			$query = $this->link->prepare("INSERT INTO `pb_db`.`EmploymentTypeInfo_HR` (EmployeeId, EmpTypeId) VALUES (?,?)");
+			$query = $this->link->prepare("INSERT INTO pb_db.employmenttypeinfo_hr (EmployeeId, EmpTypeId) VALUES (?,?)");
 			$values = array($eid,$etype);
 			$query->execute($values);
 		}	

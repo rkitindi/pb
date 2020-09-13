@@ -65,7 +65,7 @@ class supplierdetailActions{
 
 // This function checks if supplier exist in database
 	function check_supplier_exist($sid){
-		$query = $this->link->prepare("SELECT * FROM `SupplierInfo_PROD` WHERE SupplierId = ?");
+		$query = $this->link->prepare("SELECT * FROM supplierinfo_prod WHERE SupplierId = ?");
      	$values = array($sid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -86,7 +86,7 @@ class supplierdetailActions{
 	
 // Insert Function
     function insert_supplier_details($sid,$bname,$cname,$address,$email,$phone,$supcat){
-		$query = $this->link->prepare("INSERT INTO `SupplierInfo_PROD` (SupplierId, BusinessName, ContactName, Address, EmailAddress, PhoneNumber, CategoryId) VALUES (?,?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO supplierinfo_prod (SupplierId, BusinessName, ContactName, Address, EmailAddress, PhoneNumber, CategoryId) VALUES (?,?,?,?,?,?,?)");
 		$values = array($sid,$bname,$cname,$address,$email,$phone,$supcat);
 		$query->execute($values);
 		echo "SUPPLIER DETAILS added successfully";		

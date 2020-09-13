@@ -46,7 +46,7 @@ class posActions{
 	
 // This function checks if TODAY's MOTD exist in database
 	function check_pos_exist($pid){
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`POSInfo_SAL` WHERE POSId = ?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.posinfo_sal WHERE POSId = ?");
      	$values = array($pid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -56,7 +56,7 @@ class posActions{
 	
 // Insert Function
     function insert_pos_details($pid,$pname,$eid){
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`POSInfo_SAL` (POSId, POSName, EmployeeID) VALUES (?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.posinfo_sal (POSId, POSName, EmployeeID) VALUES (?,?,?)");
 		$values = array($pid,$pname,$eid);
 		$query->execute($values);				
     }	

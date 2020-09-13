@@ -105,7 +105,7 @@ class productdetailActions{
 
 // This function checks if product exist in database
 	function check_product_exist($pcode){
-		$query = $this->link->prepare("SELECT * FROM `productInfo_PROD` WHERE ProductCode = ?");
+		$query = $this->link->prepare("SELECT * FROM productinfo_prod WHERE ProductCode = ?");
      	$values = array($pcode);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -128,7 +128,7 @@ class productdetailActions{
 	
 // Insert Function
     function insert_product_details($pcode,$bname,$quality,$imagepath,$sprice,$psup){
-		$query = $this->link->prepare("INSERT INTO `productInfo_PROD` (ProductCode, BrandId, QualityId, ProductPhoto, SellingPrice, SupplierId) VALUES (?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO productinfo_prod (ProductCode, BrandId, QualityId, ProductPhoto, SellingPrice, SupplierId) VALUES (?,?,?,?,?,?)");
 		$values = array($pcode,$bname,$quality,$imagepath,$sprice,$psup);
 		$query->execute($values);		
     }	

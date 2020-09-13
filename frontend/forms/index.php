@@ -5,9 +5,9 @@
 
 	// Include setup.php file
 	include "scripts/fe_queries.php";
-	
+
 	// read the product categories from the database
-	$motd_list = new queryFRONTEND();	
+	$motd_list = new queryFRONTEND();
 	$motd = $motd_list->fetch_MOTD();
 
 ?>
@@ -61,20 +61,21 @@
            <div id="section_3">
 		   		<form id="logout_form">
 					<input type="submit" id="logout_btn" name="logout" value="LOGOUT">
-				</form>	
+				</form>
 		   </div>
         </div>
 	</div>
-	<script> 
-		
+
+	<script>
+
 		$("#logout_btn").click(function(){
             $.get("scripts/login.php", $("#logout_form").serialize(), function(response) {
 				$("#form_wrapper").html(response);
 			});
 			return false;
         });
-			
+
 	</script>
+	
    </body>
 </html>
-

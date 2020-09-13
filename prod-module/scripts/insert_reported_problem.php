@@ -37,7 +37,7 @@ class reportproblemActions{
 	
 	// Insert Function
     function insert_problem_reported($e_id,$pdesc,$repodate){
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`REPORTPROBLEMS_ADM` (EmployeeID, ProblemDesc, DateOccured) VALUES (?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.reportproblems_adm (EmployeeID, ProblemDesc, DateOccured) VALUES (?,?,?)");
 		$values = array($e_id,$pdesc,$repodate);
 		$query->execute($values);				
     }	

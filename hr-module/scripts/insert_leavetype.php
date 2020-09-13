@@ -8,25 +8,25 @@
 	$paysstatus = "";
 	$leavedesc = "";
 
- 
+
 
 	class leavetypeActions{
 
-		public $link; 
+		public $link;
 
 
 		function __construct(){
 			$db_connection = new dbConnection();
-			$this->link = $db_connection->connect();   
+			$this->link = $db_connection->connect();
 			return $this->link;
 		}
-	
+
 		// Insert Function
 		function insert_leavetype($lvtype,$paysstatus,$leavedesc){
-			$query = $this->link->prepare("INSERT INTO `LeaveType_HR` (LeaveType, PaymentStatus, Description) VALUES (?,?,?)");
+			$query = $this->link->prepare("INSERT INTO leaveType_hr (LeaveType, PaymentStatus, Description) VALUES (?,?,?)");
 			$values = array($lvtype,$paysstatus,$leavedesc);
-			$query->execute($values);		
-		}	
+			$query->execute($values);
+		}
 	}
 
 	$action = new leavetypeActions();
@@ -35,8 +35,8 @@
 		$paysstatus = trim($_POST['paysstatus'] ?? '');
 		$leavedesc = trim($_POST['leavedesc'] ?? '');
 		echo $action->insert_leavetype($lvtype,$paysstatus,$leavedesc);
-		echo "LEAVE TYPE added successfully";	
-	}	
+		echo "LEAVE TYPE added successfully";
+	}
 
 
 ?>

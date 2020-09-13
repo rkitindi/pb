@@ -63,7 +63,7 @@ class customerdetailActions{
 
 // This function checks if customer exist in database
 	function check_customer_exist($cid){
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`CustomerDetails_SAL` WHERE customerId = ?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.customerdetails_sal WHERE customerId = ?");
      	$values = array($cid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -84,7 +84,7 @@ class customerdetailActions{
 	
 // Insert Function
     function insert_customer_details($cid,$bname,$address,$email,$phone,$cname){
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`CustomerDetails_SAL` (customerId, BusinessName, Location, EmailAddress, PhoneNumber, ContactName) VALUES (?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.customerdetails_sal (customerId, BusinessName, Location, EmailAddress, PhoneNumber, ContactName) VALUES (?,?,?,?,?,?)");
 		$values = array($cid,$bname,$address,$email,$phone,$cname);
 		$query->execute($values);				
     }	

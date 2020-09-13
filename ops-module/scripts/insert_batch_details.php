@@ -269,7 +269,7 @@ class batchdetailActions{
 // This function checks if batch exist in database
 	function validate_range($cnum,$cnum1){
 		
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`BatchRange_ACC` WHERE StartingNumber <= ? AND EndingNumber >= ?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.batchrange_acc WHERE StartingNumber <= ? AND EndingNumber >= ?");
      	$values = array($cnum,$cnum1);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -280,7 +280,7 @@ class batchdetailActions{
 	function check_batchrangeID_exist($RID){		
 	
 		//CHECK Range ID EXISTS IN BatchDetailsTable
-		$query = $this->link->prepare("SELECT BatchRangeId FROM `pb_db`.`BatchDetails_ACC` WHERE BatchRangeId = ?");
+		$query = $this->link->prepare("SELECT BatchRangeId FROM pb_db.batchdetails_acc WHERE BatchRangeId = ?");
      	$values = array($RID);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -291,7 +291,7 @@ class batchdetailActions{
 	function get_batchrange_id($cnum,$cnum1){
 
 		//GET range ID from BatchRangeTable
-		$query = $this->link->prepare("SELECT BatchRangeId FROM `pb_db`.`BatchRange_ACC` WHERE StartingNumber <= ? AND EndingNumber >= ?");		
+		$query = $this->link->prepare("SELECT BatchRangeId FROM pb_db.batchrange_acc WHERE StartingNumber <= ? AND EndingNumber >= ?");		
 		$values = array($cnum,$cnum1);
 		$query->execute($values);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -307,7 +307,7 @@ class batchdetailActions{
 	function get_latest_batchrange_id($R_ID){
 		
 	    //GET Latest BatchRangeID from BatchDetailsTable
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`BatchDetails_ACC` WHERE BatchRangeId = ? ORDER BY BatchId DESC LIMIT 1");
+		$query = $this->link->prepare("SELECT * FROM pb_db.batchdetails_acc WHERE BatchRangeId = ? ORDER BY BatchId DESC LIMIT 1");
 		$values = array($R_ID);
 		$query->execute($values);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -322,7 +322,7 @@ class batchdetailActions{
 	function get_latest_cycle($rangeID){
 		
 		//GET range ID from BatchRangeTable		
-		$query = $this->link->prepare("SELECT RangeCycle FROM `pb_db`.`BatchDetails_ACC` WHERE BatchRangeId = ? ORDER BY BatchId DESC LIMIT 1");
+		$query = $this->link->prepare("SELECT RangeCycle FROM pb_db.batchdetails_acc WHERE BatchRangeId = ? ORDER BY BatchId DESC LIMIT 1");
      	try{
 			$values = array($rangeID);
 			$query->execute($values);
@@ -338,7 +338,7 @@ class batchdetailActions{
 // This function checks if Control Number Exists in Batch Details within a given RANGE and Cycle
 	function check_CNUM_exist($cnum,$rangeID,$cycle){
 		
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`BatchDetails_ACC` WHERE ControlNumber=? and BatchRangeId=? and RangeCycle=?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.batchdetails_acc WHERE ControlNumber=? and BatchRangeId=? and RangeCycle=?");
 		try{
 			$values = array($cnum,$rangeID,$cycle);
 			$query->execute($values);
@@ -351,7 +351,7 @@ class batchdetailActions{
 // This Function Returns Batch Range ID count from BatchDetails Table for a specified Frequency
 	function get_Batch_RangeID_count($rangeID,$cycle){
 		
-		$query = $this->link->prepare("SELECT count(BatchRangeId) AS BRIDCOUNT FROM `pb_db`.`BatchDetails_ACC` WHERE BatchRangeId=? and RangeCycle=?");
+		$query = $this->link->prepare("SELECT count(BatchRangeId) AS BRIDCOUNT FROM pb_db.batchdetails_acc WHERE BatchRangeId=? and RangeCycle=?");
 		try{
 			$values = array($rangeID,$cycle);
 			$query->execute($values);
@@ -368,7 +368,7 @@ class batchdetailActions{
 	function get_latest_arrive_year($rangeID,$cycle){
 		
 		//Calculate Range
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`BatchDetails_ACC` WHERE BatchRangeId=? and RangeCycle=? ORDER BY BatchId DESC LIMIT 1");
+		$query = $this->link->prepare("SELECT * FROM pb_db.batchdetails_acc WHERE BatchRangeId=? and RangeCycle=? ORDER BY BatchId DESC LIMIT 1");
 		try{
 			$values = array($rangeID,$cycle);
 			$query->execute($values);
@@ -387,7 +387,7 @@ class batchdetailActions{
 	function get_range($rangeID){
 		
 		//Calculate Range
-		$query = $this->link->prepare("SELECT StartingNumber, EndingNumber FROM `pb_db`.`BatchRange_ACC` WHERE BatchRangeId=?");
+		$query = $this->link->prepare("SELECT StartingNumber, EndingNumber FROM pb_db.batchrange_acc WHERE BatchRangeId=?");
 		try{
 			$values = array($rangeID);
 			$query->execute($values);
@@ -406,7 +406,7 @@ class batchdetailActions{
 	function get_first_cnum_in_range($rangeID){
 		
 		//Calculate Range
-		$query = $this->link->prepare("SELECT StartingNumber FROM `pb_db`.`BatchRange_ACC` WHERE BatchRangeId= ?");
+		$query = $this->link->prepare("SELECT StartingNumber FROM pb_db.batchrange_acc WHERE BatchRangeId= ?");
 		try{
 			$values = array($rangeID);
 			$query->execute($values);
@@ -432,7 +432,7 @@ class batchdetailActions{
 // Insert Function
     function insert_batch_details($cnum,$rangeID,$supid,$truckid,$imagepath,$ddisp,$darr,$cycle,$pcount){
 		
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`BatchDetails_ACC` (ControlNumber, BatchRangeId, SupplierId, RegNumber, DateDispatched, DateArrived, BatchDocument,RangeCycle,ProductCount) VALUES (?,?,?,?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.batchdetails_acc (ControlNumber, BatchRangeId, SupplierId, RegNumber, DateDispatched, DateArrived, BatchDocument,RangeCycle,ProductCount) VALUES (?,?,?,?,?,?,?,?,?)");
 		$values = array($cnum,$rangeID,$supid,$truckid,$ddisp,$darr,$imagepath,$cycle,$pcount);
 		$query->execute($values);			
     }	

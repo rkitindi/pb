@@ -43,7 +43,7 @@ class farmdetailActions{
 
 // This function checks if farm exist in database
 	function check_farm_exist($fname){
-		$query = $this->link->prepare("SELECT * FROM `farmInfo_PROD` WHERE farmId = ?");
+		$query = $this->link->prepare("SELECT * FROM farminfo_prod WHERE farmId = ?");
      	$values = array($fname);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -52,7 +52,7 @@ class farmdetailActions{
 	
 // Insert Function
     function insert_farm_details($fname,$fsize,$bname){
-		$query = $this->link->prepare("INSERT INTO `FarmInfo_PROD` (FarmName, FarmSize, SupplierId) VALUES (?,?,?)");
+		$query = $this->link->prepare("INSERT INTO farminfo_prod (FarmName, FarmSize, SupplierId) VALUES (?,?,?)");
 		$values = array($fname,$fsize,$bname);
 		$query->execute($values);
 		echo "farm DETAILS added successfully";		

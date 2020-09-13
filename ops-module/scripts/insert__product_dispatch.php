@@ -84,7 +84,7 @@ class proddispatchActions{
    // This Fetch Available Product Stock	
 	function fetch_available_stock($prrn){
 		
-		$query = $this->link->prepare("SELECT (ReceiveProduct_ACC.Quantity - COALESCE(SUM(DispatchProduct_ACC.Quantity),0)) AS Stock FROM DispatchProduct_ACC RIGHT JOIN ReceiveProduct_ACC on DispatchProduct_ACC.ProductReceiptNumber = ReceiveProduct_ACC.ProductReceiptNumber WHERE ReceiveProduct_ACC.ProductReceiptNumber = ?");
+		$query = $this->link->prepare("SELECT (receiveproduct_acc.Quantity - COALESCE(SUM(dispatchproduct_acc.Quantity),0)) AS Stock FROM dispatchproduct_acc RIGHT JOIN receiveproduct_acc on dispatchproduct_acc.ProductReceiptNumber = receiveproduct_acc.ProductReceiptNumber WHERE receiveproduct_acc.ProductReceiptNumber = ?");
 		try{
 			$values = array($prrn);
 			$query->execute($values);
@@ -99,7 +99,7 @@ class proddispatchActions{
 	// This Check If Record Exists	
 	function check_record_exists($prrn,$pos){
 		
-		$query = $this->link->prepare("select * from `pb_db`.`DispatchProduct_ACC` WHERE ProductReceiptNumber=? AND POSId=?");
+		$query = $this->link->prepare("select * from pb_db.dispatchproduct_acc WHERE ProductReceiptNumber=? AND POSId=?");
 		try{
 			$values = array($prrn,$pos);
 			$query->execute($values);
@@ -115,7 +115,7 @@ class proddispatchActions{
 	
     // Insert Function
     function insert_proddispatch_details($prrn,$pos,$quantity,$ddisp,$dispatch,$comm){
-		$query = $this->link->prepare("INSERT  INTO  `pb_db`.`DispatchProduct_ACC` (ProductReceiptNumber, POSId, Quantity, DateDispatched, Dispatched, Comments) VALUES (?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT  INTO  pb_db.dispatchproduct_acc (ProductReceiptNumber, POSId, Quantity, DateDispatched, Dispatched, Comments) VALUES (?,?,?,?,?,?)");
 		$values = array($prrn,$pos,$quantity,$ddisp,$dispatch,$comm);
 		$query->execute($values);				
     }	

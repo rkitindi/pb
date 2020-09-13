@@ -75,7 +75,7 @@ class prodreceiptActions{
 
 // This function checks if prodreceipt exist in database
 	function check_prodreceipt_exist($pcode,$bid){
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`ReceiveProduct_ACC` WHERE ProductCode = ? and BatchId = ?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.receiveproduct_acc WHERE ProductCode = ? and BatchId = ?");
      	$values = array($pcode,$bid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -85,7 +85,7 @@ class prodreceiptActions{
 // This function retrieve batchID	
 	function get_batch_id($cnum,$cynum){
 		
-		$query = $this->link->prepare("SELECT BatchId FROM `pb_db`.`BatchDetails_ACC` WHERE ControlNumber = ? and RangeCycle = ?");
+		$query = $this->link->prepare("SELECT BatchId FROM pb_db.batchdetails_acc WHERE ControlNumber = ? and RangeCycle = ?");
 		try{
 			$values = array($cnum,$cynum);
 			$query->execute($values);
@@ -101,7 +101,7 @@ class prodreceiptActions{
 	// This function retrieve batchID	
 	function get_prodreceipt_number($pcode,$bid){
 		
-		$query = $this->link->prepare("SELECT ProductReceiptNumber FROM `pb_db`.`ReceiveProduct_ACC` WHERE ProductCode=? and BatchId=?");
+		$query = $this->link->prepare("SELECT ProductReceiptNumber FROM pb_db.receiveproduct_acc WHERE ProductCode=? and BatchId=?");
 		try{
 			$values = array($pcode,$bid);
 			$query->execute($values);
@@ -115,7 +115,7 @@ class prodreceiptActions{
 	
 // Insert Function
     function insert_prodreceipt_details($pcode,$bid,$fname,$quantity,$cid,$darr){
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`ReceiveProduct_ACC` (ProductCode, BatchId, FarmId, Quantity, CaseCode, DateReceived) VALUES (?,?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.receiveproduct_acc (ProductCode, BatchId, FarmId, Quantity, CaseCode, DateReceived) VALUES (?,?,?,?,?,?)");
 		$values = array($pcode,$bid,$fname,$quantity,$cid,$darr);
 		$query->execute($values);				
     }	

@@ -68,7 +68,7 @@ class deffectiveproductActions{
    // This Fetch Available Product Stock	
 	function fetch_stock($prid){
 		
-		$query = $this->link->prepare("select ProductReceived_SAL.ProductReceiptId, DispatchProduct_ACC.POSId, ReceiveProduct_ACC.ProductCode, (ProductReceived_SAL.Quantity - COALESCE(SUM(SaleProductReceived_SAL.Quantity),0) - COALESCE(SUM(DISTINCT RegisterDeffectiveProd_SAL.Quantity),0)) AS Stock FROM ProductReceived_SAL LEFT JOIN SaleProductReceived_SAL ON SaleProductReceived_SAL.ProductReceiptId = ProductReceived_SAL.ProductReceiptId LEFT JOIN RegisterDeffectiveProd_SAL ON RegisterDeffectiveProd_SAL.ProductReceiptId = ProductReceived_SAL.ProductReceiptId JOIN DispatchProduct_ACC ON DispatchProduct_ACC.DispatchRefNum = ProductReceived_SAL.DispatchRefNum JOIN ReceiveProduct_ACC ON ReceiveProduct_ACC.ProductReceiptNumber = DispatchProduct_ACC.ProductReceiptNumber GROUP BY 1 HAVING Stock > 0 AND ProductReceived_SAL.ProductReceiptId = ?");
+		$query = $this->link->prepare("select productreceived_sal.ProductReceiptId, dispatchproduct_acc.POSId, receiveproduct_acc.ProductCode, (productreceived_sal.Quantity - COALESCE(SUM(saleproductreceived_sal.Quantity),0) - COALESCE(SUM(DISTINCT registerdeffectiveprod_sal.Quantity),0)) AS Stock FROM productreceived_sal LEFT JOIN saleproductreceived_sal ON saleproductreceived_sal.ProductReceiptId = productreceived_sal.ProductReceiptId LEFT JOIN registerdeffectiveprod_sal ON registerdeffectiveprod_sal.ProductReceiptId = productreceived_sal.ProductReceiptId JOIN dispatchproduct_acc ON dispatchproduct_acc.DispatchRefNum = productreceived_sal.DispatchRefNum JOIN receiveproduct_acc ON receiveproduct_acc.ProductReceiptNumber = dispatchproduct_acc.ProductReceiptNumber GROUP BY 1 HAVING Stock > 0 AND productreceived_sal.ProductReceiptId = ?");
 		try{
 			$values = array($prid);
 			$query->execute($values);
@@ -82,7 +82,7 @@ class deffectiveproductActions{
 	
     // Insert Function
     function insert_deffectiveproduct_details($prid,$quantity,$deff,$rdate,$comment){
-		$query = $this->link->prepare("INSERT  INTO  `pb_db`.`RegisterDeffectiveProd_SAL` (ProductReceiptId, Quantity, Confirmation, DateReported, Comments) VALUES (?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT  INTO  pb_db.registerdeffectiveprod_sal (ProductReceiptId, Quantity, Confirmation, DateReported, Comments) VALUES (?,?,?,?,?)");
 		$values = array($prid,$quantity,$deff,$rdate,$comment);
 		$query->execute($values);				
     }	

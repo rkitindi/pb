@@ -35,7 +35,7 @@ class permissionActions{
 	
 // This function checks if TODAY's MOTD exist in database
 	function check_perm_exist($pname){
-		$query = $this->link->prepare("SELECT * FROM `UserPermission_ADM` WHERE PermissionName = ?");
+		$query = $this->link->prepare("SELECT * FROM userpermission_adm WHERE PermissionName = ?");
      	$values = array($pname);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -45,7 +45,7 @@ class permissionActions{
 	
 // Insert Function
     function insert_perm($pname,$pdesc){
-		$query = $this->link->prepare("INSERT INTO `UserPermission_ADM` (PermissionName, Description) VALUES (?,?)");
+		$query = $this->link->prepare("INSERT INTO userpermission_adm (PermissionName, Description) VALUES (?,?)");
 		$values = array($pname,$pdesc);
 		$query->execute($values);
 		echo "PERMISSION added successfully";		

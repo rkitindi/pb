@@ -75,7 +75,7 @@ class bnrActions{
 	
 // This function checks if batch number range exist in database
 	function check_brid_exist($brid){
-		$query = $this->link->prepare("SELECT * FROM `pb_db`.`BatchRange_ACC` WHERE BatchRangeId = ?");
+		$query = $this->link->prepare("SELECT * FROM pb_db.batchrange_acc WHERE BatchRangeId = ?");
      	$values = array($brid);
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -86,7 +86,7 @@ class bnrActions{
 // Insert Function
     function insert_bnr($brid,$stnum,$ennum,$sfflag,$description){
 		
-		$query = $this->link->prepare("INSERT INTO `pb_db`.`BatchRange_ACC` (BatchRangeId, StartingNumber, EndingNumber, SFIndication, Description) VALUES (?,?,?,?,?)");
+		$query = $this->link->prepare("INSERT INTO pb_db.batchrange_acc (BatchRangeId, StartingNumber, EndingNumber, SFIndication, Description) VALUES (?,?,?,?,?)");
 		$values = array($brid,$stnum,$ennum,$sfflag,$description);
 		$query->execute($values);
 			

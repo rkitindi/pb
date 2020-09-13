@@ -7,25 +7,25 @@
    	$payschedule = "";
 	$paydesc = "";
 
- 
+
 
 	class paytypeActions{
 
-		public $link; 
+		public $link;
 
 
 		function __construct(){
 			$db_connection = new dbConnection();
-			$this->link = $db_connection->connect();   
+			$this->link = $db_connection->connect();
 			return $this->link;
 		}
-	
+
 		// Insert Function
 		function insert_payschedule($payschedule,$paydesc){
-			$query = $this->link->prepare("INSERT INTO `PaymentSchedule_HR` (PaymentSchedule, Description) VALUES (?,?)");
+			$query = $this->link->prepare("INSERT INTO paymentschedule_hr (PaymentSchedule, Description) VALUES (?,?)");
 			$values = array($payschedule,$paydesc);
-			$query->execute($values);				
-		}	
+			$query->execute($values);
+		}
 	}
 
 	$action = new paytypeActions();
@@ -33,8 +33,8 @@
 		$payschedule = trim($_POST['payschedule'] ?? '');
 		$paydesc = trim($_POST['paydesc'] ?? '');
 		echo $action->insert_payschedule($payschedule,$paydesc);
-		echo "PAYMENT SCHEDULE added successfully";	
-	}	
+		echo "PAYMENT SCHEDULE added successfully";
+	}
 
 
 ?>

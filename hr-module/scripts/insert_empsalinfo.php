@@ -25,7 +25,7 @@
 	
 		// Insert Function
 		function insert_employee_details($eid,$pschedule,$bsalary,$ssec,$stax,$ftax,$income){
-			$query = $this->link->prepare("INSERT INTO `pb_db`.`SalaryInfo_HR` (EmployeeId, PayScheduleId, BaseSalary, SocialSec, StateTax, FederalTax, NetIncome) VALUES (?,?,?,?,?,?,?)");
+			$query = $this->link->prepare("INSERT INTO pb_db.salaryinfo_hr (EmployeeId, PayScheduleId, BaseSalary, SocialSec, StateTax, FederalTax, NetIncome) VALUES (?,?,?,?,?,?,?)");
 			$values = array($eid,$pschedule,$bsalary,$ssec,$stax,$ftax,$income);
 			$query->execute($values);
 		}	

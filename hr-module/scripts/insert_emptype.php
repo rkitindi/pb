@@ -21,7 +21,7 @@
 	
 		// Insert Function
 		function insert_etype($etype,$etypedesc){
-			$query = $this->link->prepare("INSERT INTO `pb_db`.`EmploymentType_HR` (EmploymentType, Description) VALUES (?,?)");
+			$query = $this->link->prepare("INSERT INTO pb_db.employmenttype_hr (EmploymentType, Description) VALUES (?,?)");
 			$values = array($etype,$etypedesc);
 			$query->execute($values);
 			

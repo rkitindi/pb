@@ -22,7 +22,7 @@
 
 		// Insert Function
 		function insert_deptname($deptname,$deptdesc){
-			$query = $this->link->prepare("INSERT INTO `Department_HR` (DepartmentName, Description) VALUES (?,?)");
+			$query = $this->link->prepare("INSERT INTO department_hr (DepartmentName, Description) VALUES (?,?)");
 			$values = array($deptname,$deptdesc);
 			$query->execute($values);	
 		}	

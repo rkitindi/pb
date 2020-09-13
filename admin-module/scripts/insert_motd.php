@@ -39,7 +39,7 @@ class messageActions{
 	
 // This function checks if TODAY's MOTD exist in database
 	function check_msg_exist(){
-		$query = $this->link->prepare("SELECT * FROM `MOTD_ADM` WHERE MessageDate = ?");
+		$query = $this->link->prepare("SELECT * FROM motd_adm WHERE MessageDate = ?");
      	$values = array(date("Y-m-d"));
 		$query->execute($values);
 		$counts = $query->rowCount();
@@ -49,7 +49,7 @@ class messageActions{
 	
 // Insert Function
     function insert_motd($motd){
-		$query = $this->link->prepare("INSERT INTO MOTD_ADM (MessageDate, Message) VALUES (?,?)");
+		$query = $this->link->prepare("INSERT INTO motd_adm (MessageDate, Message) VALUES (?,?)");
 		$values = array(date("Y-m-d"),$motd);
 		$query->execute($values);
 		echo "MOTD added successfully";		
